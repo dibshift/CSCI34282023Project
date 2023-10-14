@@ -1,0 +1,26 @@
+@startuml
+
+title Website
+
+package "Map" {
+  [OpenLayers]
+  [OpenStreetMaps]
+  [Bootstrap]
+}
+
+[About]
+
+package "Ecosystem" {
+}
+
+[Burial]
+
+[Quiz]
+
+package "Blog" {
+  [Bootstrap ]
+  [MySQL]
+  [Google Login]
+}
+
+@enduml
