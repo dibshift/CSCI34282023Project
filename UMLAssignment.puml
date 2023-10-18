@@ -23,4 +23,11 @@ package "Blog" {
   [Google Login]
 }
 
+
+package "Events" {
+  [Google Login ]
+  [Google Calendar API]
+  [Bootstrap  ]
+}
+
 @enduml
