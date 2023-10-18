@@ -21,6 +21,12 @@ package "Ecosystem" {
 
 [Map]
 
+[Marketplace]
+
+[Gallery]
+
+[Photo Upload]
+
 package "Blog" {
   [Bootstrap ]
   [MySQL]
@@ -44,5 +50,8 @@ package "Events" {
 [Header Bar] --> [Ecosystem]
 [Header Bar] --> [Blog]
 [Header Bar] --> [Events]
+[Header Bar] --> [Marketplace]
+[Header Bar] --> [Gallery]
+[Header Bar] --> [Photo Upload]
 
 @enduml
