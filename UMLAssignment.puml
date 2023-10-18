@@ -30,4 +30,7 @@ package "Events" {
   [Bootstrap  ]
 }
 
+[OpenLayers] --> [OpenStreetMaps]
+[OpenLayers] -[dotted]-> [Bootstrap]
+
 @enduml
