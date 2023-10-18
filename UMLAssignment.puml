@@ -2,7 +2,7 @@
 
 title Website
 
-package "Map" {
+package "Mobile Map" {
   [OpenLayers]
   [OpenStreetMaps]
   [Bootstrap]
@@ -16,6 +16,10 @@ package "Ecosystem" {
 [Burial]
 
 [Quiz]
+
+[Header Bar]
+
+[Map]
 
 package "Blog" {
   [Bootstrap ]
@@ -32,5 +36,13 @@ package "Events" {
 
 [OpenLayers] --> [OpenStreetMaps]
 [OpenLayers] -[dotted]-> [Bootstrap]
+[Header Bar] --> [About]
+[Map] --> [Mobile Map]
+[Header Bar] --> [Map]
+[Header Bar] --> [Burial]
+[Header Bar] --> [Quiz]
+[Header Bar] --> [Ecosystem]
+[Header Bar] --> [Blog]
+[Header Bar] --> [Events]
 
 @enduml
