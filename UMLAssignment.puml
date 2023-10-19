@@ -40,6 +40,13 @@ package "Events" {
   [Bootstrap  ]
 }
 
+package "Encyclopedia (Desktop & Mobile)" {
+  [CSS]
+  [HTML]
+  [Javascript]
+  [React]
+}
+
 [OpenLayers] --> [OpenStreetMaps]
 [OpenLayers] -[dotted]-> [Bootstrap]
 [Header Bar] --> [About]
@@ -53,5 +60,7 @@ package "Events" {
 [Header Bar] --> [Marketplace]
 [Header Bar] --> [Gallery]
 [Header Bar] --> [Photo Upload]
+[Header Bar] --> [Encyclopedia]
+[Encyclopedia] --> [Mobile Encyclopedia]
 
 @enduml
