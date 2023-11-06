@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>Display a marker</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.2.2/ol.css">
+    <script src="https://cdn.jsdelivr.net/npm/ol@v7.2.2/dist/ol.js"></script>
+    <style>
+      #map {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="map">
+      <a href="https://www.maptiler.com"
+        style="position:absolute;left:10px;bottom:10px;z-index:999;"><img
+          src="https://api.maptiler.com/resources/logo.svg"
+          alt="MapTiler logo"></a>
+    </div>
+    <script>
+      const key = 'tQx8zFcmxYeAJ9ER3Ufz';
+
+      const attribution = new ol.control.Attribution({
+        collapsible: false,
+      });
+
+      const source = new ol.source.TileJSON({
+        url: `https://api.maptiler.com/maps/topo-v2/tiles.json?key=${key}`, // source URL
+        tileSize: 512,
+        crossOrigin: 'anonymous'
+      });
+
+      const map = new ol.Map({
+        layers: [
+          new ol.layer.Tile({
+            source: source
+          })
+        ],
+        controls: ol.control.defaults.defaults({ attribution: false }).extend([attribution]),
+        target: 'map',
+        view: new ol.View({
+          constrainResolution: true,
+          center: ol.proj.fromLonLat([-63.923103, 44.6261]), // starting position [lng, lat]
+          zoom: 17 // starting zoom
+        })
+      });
+      const layer = new ol.layer.Vector({
+        source: new ol.source.Vector({
+          features: [
+            new ol.Feature({
+              geometry: new ol.geom.Point(ol.proj.fromLonLat([-63.92351, 44.626459])),
+            })
+
+          ]
+        }),
+        style: new ol.style.Style({
+          image: new ol.style.Icon({
+            anchor: [0.5, 1],
+            crossOrigin: 'anonymous',
+            src: 'https://docs.maptiler.com/openlayers/default-marker/marker-icon.png',
+          })
+        })
+      });
+      map.addLayer(layer);
+    </script>
+  </body>
+
+</html>
