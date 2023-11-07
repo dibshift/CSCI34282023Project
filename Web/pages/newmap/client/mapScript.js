@@ -1,6 +1,7 @@
 const attribution = new ol.control.Attribution({
   collapsible: false,
 });
+
 //source for map type
 const source = new ol.source.TileJSON({
   url: `https://api.maptiler.com/maps/satellite/tiles.json?key=tQx8zFcmxYeAJ9ER3Ufz`, // source URL
@@ -8,6 +9,7 @@ const source = new ol.source.TileJSON({
   crossOrigin: 'anonymous'
 });
 
+//create map with the source data
 const map = new ol.Map({
   layers: [
     new ol.layer.Tile({
@@ -20,9 +22,11 @@ const map = new ol.Map({
   view: new ol.View({
     constrainResolution: true,
     center: ol.proj.fromLonLat([-63.923103, 44.6261]), // starting position [lng, lat]
-    zoom: 19.5 // starting zoom
+    zoom: 19 // starting zoom
   })
 });
+
+//Trailhead marker creation
 const trailHead = new ol.layer.Vector({
   source: new ol.source.Vector({
     features: [
@@ -31,6 +35,7 @@ const trailHead = new ol.layer.Vector({
       })
     ]
   }),
+  //create the marker's image
   style: new ol.style.Style({
     image: new ol.style.Icon({
       anchor: [0.5, 1],
@@ -82,7 +87,7 @@ const oldWell = makeMarker(-63.922742, 44.625875);
 //create a layer for the big apple tree marker
 const bigAppleTree = makeMarker(-63.922568, 44.625831);
 
-//create a layer for the bent apple tree marker
+//create a layer for the trail end marker
 const trailEnd = new ol.layer.Vector({
   source: new ol.source.Vector({
     features: [
@@ -114,6 +119,12 @@ const trailEnd = new ol.layer.Vector({
 
 addAllMarkers();
 
+
+/**
+ * Author: Christian Sawyer
+ * 
+ * Adds the layer of each of the markers
+ */
 function addAllMarkers() {
   //add marker layers
   map.addLayer(trailHead);
