@@ -4,10 +4,33 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/x-icon" href="https://openlayers.org/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Importing other stuff -->
+    <!-- I forget why I need this but I do for bootstrap (jquery)-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <!-- Bootstrap (the js file should already be in the node) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <title>English Metropolis City Conservation</title>
   </head>
-  <body>
+  <body onload="setup()">
     <div id="map"></div>
     <script type="module" src="./main.js"></script>
+
+    <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
+      <!-- <div class="offcanvas-header text-center">
+        <h5 class="offcanvas-title" id="offcanvasBottomLabel">Offcanvas bottom</h5>
+      </div> -->
+      <div class="offcanvas-body small text-center">
+        <!-- All this for a flower -->
+        <!-- ? Change this if you use more icons from bootstrap -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" fill="currentColor" class="bi bi-flower2" viewBox="0 0 16 16">
+          <path d="M8 16a4 4 0 0 0 4-4 4 4 0 0 0 0-8 4 4 0 0 0-8 0 4 4 0 1 0 0 8 4 4 0 0 0 4 4zm3-12c0 .073-.01.155-.03.247-.544.241-1.091.638-1.598 1.084A2.987 2.987 0 0 0 8 5c-.494 0-.96.12-1.372.331-.507-.446-1.054-.843-1.597-1.084A1.117 1.117 0 0 1 5 4a3 3 0 0 1 6 0zm-.812 6.052A2.99 2.99 0 0 0 11 8a2.99 2.99 0 0 0-.812-2.052c.215-.18.432-.346.647-.487C11.34 5.131 11.732 5 12 5a3 3 0 1 1 0 6c-.268 0-.66-.13-1.165-.461a6.833 6.833 0 0 1-.647-.487zm-3.56.617a3.001 3.001 0 0 0 2.744 0c.507.446 1.054.842 1.598 1.084.02.091.03.174.03.247a3 3 0 1 1-6 0c0-.073.01-.155.03-.247.544-.242 1.091-.638 1.598-1.084zm-.816-4.721A2.99 2.99 0 0 0 5 8c0 .794.308 1.516.812 2.052a6.83 6.83 0 0 1-.647.487C4.66 10.869 4.268 11 4 11a3 3 0 0 1 0-6c.268 0 .66.13 1.165.461.215.141.432.306.647.487zM8 9a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+        </svg>
+        <p style="font-size:5vw;">English Metropolis City Conservation
+          Companion Mobile Map</p>
+        <t>Allow tracking to give us your personal data.</t>
+        <button type="button" class="btn btn-primary" id="allowTrackingbtn">Sign your life away ;)</button>
+      </div>
+    
   </body>
 </html>
