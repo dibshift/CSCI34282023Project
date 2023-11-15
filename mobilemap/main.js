@@ -105,7 +105,6 @@ geolocation.on('change:position', function () {
   if (len >= 2) {
     deltaMean = (coords[len - 1][3] - coords[0][3]) / (len - 1);
   }
-  alert(coords)
 });
 
 let previousM = 0;
