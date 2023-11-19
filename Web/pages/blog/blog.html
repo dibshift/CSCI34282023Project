@@ -9,6 +9,9 @@
     , initial-scale=1.0"
     />
 
+    <!--Linking bootstrap for styling-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
     <!--Linking the css files for styling-->
     <link rel="stylesheet" href="../../styles/body.css" />
     <link rel="stylesheet" href="../../styles/nav.css" />
@@ -34,6 +37,7 @@
     <script defer src="../../scripts/estore.js"></script>
 
 <title>Saint Margaret's Bay Store</title>
+
 </head>
 
 <body>
@@ -69,3 +73,14 @@
     </div>
   </div>
 </header>
+
+<!--Blog text entry area-->
+<div>
+  <textarea id="freeform" name="freeform" placeholder="Enter blog text here..." rows="10" cols="100"></textarea>
+  <br>
+  <div>
+    <button type="button" class="btn btn-outline-success">Post</button>
+    <button type="button" class="btn btn-outline-danger">Clear</button>
+  </div>
+</div>
+
