@@ -17,26 +17,8 @@
     <link rel="stylesheet" href="../../styles/nav.css" />
     <link rel="stylesheet" href="../../styles/header.css" />
     <link rel="stylesheet" href="../../styles/footer.css" />
-    <link rel="stylesheet" href="../../styles/index.css" />
-    <link rel="stylesheet" href="../../styles/estore.css" />
 
-    <!--Linking a custom font-->
-    <link
-      rel="stylesheet"
-      href="path/to/font-awesome/css/font-awesome.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
-    <!--Linking the javascript files for functionality-->
-    <script defer src="../../scripts/estore.js"></script>
-
-<title>Saint Margaret's Bay Store</title>
+<title>Blog</title>
 
 </head>
 
@@ -79,8 +61,11 @@
   <textarea id="freeform" name="freeform" placeholder="Enter blog text here..." rows="10" cols="100"></textarea>
   <br>
   <div>
-    <button type="button" class="btn btn-outline-success">Post</button>
-    <button type="button" class="btn btn-outline-danger">Clear</button>
+    <button type="button" class="btn btn-outline-success" id="post-button">Post</button>
+    <button type="button" class="btn btn-outline-danger" id="clear-button" onclick="clearTextArea()">Clear</button>
   </div>
 </div>
+    <!--Linking javascript file for functionality-->
+    <script src="blog.js"></script>
+</body>
 
