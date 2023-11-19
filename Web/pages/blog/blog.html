@@ -57,11 +57,11 @@
 </header>
 
 <!--Blog text entry area-->
-<div>
-  <textarea id="freeform" name="freeform" placeholder="Enter blog text here..." rows="10" cols="100"></textarea>
+<div id="blogAreaContainer">
+  <textarea id="freeform" name="freeform" placeholder="Enter blog text here..." rows="8" cols="100"></textarea>
   <br>
   <div>
-    <button type="button" class="btn btn-outline-success" id="post-button">Post</button>
+    <button type="button" class="btn btn-outline-success" id="post-button" onclick="createTextArea()">Post</button>
     <button type="button" class="btn btn-outline-danger" id="clear-button" onclick="clearTextArea()">Clear</button>
   </div>
 </div>
