@@ -1,15 +1,24 @@
 import './style.css';
 import {Map, View, Geolocation} from 'ol';
 import TileLayer from 'ol/layer/Tile';
+// OpenSourceMap
 import OSM from 'ol/source/OSM';
 import {fromLonLat} from 'ol/proj.js';
 
+// Array for holding positions that have been gained from the gps?
 import LineString from 'ol/geom/LineString.js';
+// 
 import Feature from 'ol/Feature.js';
+// Used for creating the location dot
 import {Circle as CircleStyle, Fill, Stroke, Style} from 'ol/style.js';
 import {Vector as VectorSource} from 'ol/source.js';
 import {Vector as VectorLayer} from 'ol/layer.js';
 import Point from 'ol/geom/Point.js';
+
+import GeoJSON from 'ol/format/GeoJSON.js';
+
+// This is for features.length
+let tempVar = "temp";
 
 // Maybe move this stuff to another file
 const bsOffcanvas = new bootstrap.Offcanvas('#offcanvasBottom');
@@ -68,9 +77,6 @@ geolocation.on('error', function (error) {
 });
 
 const accuracyFeature = new Feature();
-geolocation.on('change:accuracyGeometry', function () {
-  accuracyFeature.setGeometry(geolocation.getAccuracyGeometry());
-});
 
 const positionFeature = new Feature();
 positionFeature.setStyle(
@@ -91,6 +97,7 @@ positionFeature.setStyle(
 geolocation.on('change:position', function () {
   const coordinates = geolocation.getPosition();
   positionFeature.setGeometry(coordinates ? new Point(coordinates) : null);
+  // accuracyFeature.setGeometry(geolocation.getAccuracyGeometry());
   
   const position = geolocation.getPosition();
   const accuracy = geolocation.getAccuracy();
@@ -105,6 +112,36 @@ geolocation.on('change:position', function () {
   if (len >= 2) {
     deltaMean = (coords[len - 1][3] - coords[0][3]) / (len - 1);
   }
+
+   // takes information from a placed geometry. (from GeoJSON) and makes a list of info from that map.
+  // TODO: Make it so that it only does that when entering an area
+  vectorLayerz.getFeatures(map.getPixelFromCoordinate(position)).then(function (e) {
+    const features = vectorLayerz.getSource().getFeatures();
+    const feature = features.length ? features[0] : undefined;
+      if (features.length) {
+        console.log(tempVar);
+        if (feature.get("ECO_NAME") != tempVar && tempVar != undefined) {
+          tempVar = feature.get('ECO_NAME');
+          console.log("ran")
+          alert(feature.get('ECO_NAME'));
+        }
+        else {
+          console.log("missed");
+        }
+      } else {
+        alert('No features found');
+      }
+  });
+});
+
+const vectorLayerz = new VectorLayer({
+  map: map,
+  source: new VectorSource({
+    features: [accuracyFeature, positionFeature],
+    // GeoJSON
+    url: 'smutest.json',
+    format: new GeoJSON(),
+  }),
 });
 
 let previousM = 0;
@@ -126,6 +163,27 @@ function addPosition(position, heading, m, speed) {
   }
   positions.appendCoordinate([x, y, heading, m]);
 
+
+  // vectorLayerz.getSource().once('change', function(e) {
+  //   if (vectorLayerz.getSource().getState() === 'ready') {
+  //     const features = vectorLayerz.getSource().getFeatures();
+  //     const feature = features.length ? features[0] : undefined;
+  //     if (features.length) {
+  //       console.log(tempVar);
+  //       if (feature.get("ECO_NAME") != tempVar) {
+  //         tempVar = feature.get('ECO_NAME');
+  //         console.log("ran")
+  //         alert(feature.get('ECO_NAME'));
+  //       }
+  //       else {
+  //         console.log("missed");
+  //       }
+  //     } else {
+  //       alert('No features found');
+  //     }
+  //   }
+  // });
+
   // only keep the 20 last coordinates
   positions.setCoordinates(positions.getCoordinates().slice(-20));
 
@@ -137,12 +195,6 @@ function addPosition(position, heading, m, speed) {
   // }
 }
 
-new VectorLayer({
-  map: map,
-  source: new VectorSource({
-    features: [accuracyFeature, positionFeature],
-  }),
-});
 
 function updateView() {
   // use sampling period to get a smooth transition
