@@ -121,10 +121,7 @@ geolocation.on('change:position', function () {
       if (features.length) {
         console.log(tempVar);
         if (feature.get("NAME") != tempVar && tempVar != undefined) {
-          tempVar = feature.get('NAME');
-          console.log("ran")
-          window.navigator.vibrate([500])
-          alert(tempVar);
+          displayInformation(feature)
         }
         else {
           console.log("missed");
@@ -132,7 +129,7 @@ geolocation.on('change:position', function () {
       } else {
         alert('No features found');
       }
-  });
+    });
 });
 
 const vectorLayerz = new VectorLayer({
@@ -206,9 +203,7 @@ const displayFeatureInfo = function (pixel) {
     const feature = features.length ? features[0] : undefined;
     const info = document.getElementById('info');
     if (features.length) {
-        tempVar = feature.get('NAME');
-          window.navigator.vibrate([500])
-          alert(tempVar);
+        displayInformation(feature)
     }
 
     if (feature !== highlight) {
@@ -222,6 +217,14 @@ const displayFeatureInfo = function (pixel) {
     }
   });
 };
+
+// TODO: Add check for existing offchart
+function displayInformation(feature) {
+  tempVar = feature.get('NAME');
+  console.log("ran")
+  window.navigator.vibrate([500])
+  alert(tempVar);
+}
 
 
 // End of stollen code
