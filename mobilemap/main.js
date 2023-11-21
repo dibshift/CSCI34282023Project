@@ -96,7 +96,7 @@ positionFeature.setStyle(
 
 geolocation.on('change:position', function () {
   const coordinates = geolocation.getPosition();
-  positionFeature.setGeometry(coordinates ? new Point(coordinates) : null);
+  // positionFeature.setGeometry(coordinates ? new Point(coordinates) : null);
   // accuracyFeature.setGeometry(geolocation.getAccuracyGeometry());
   
   const position = geolocation.getPosition();
@@ -120,10 +120,11 @@ geolocation.on('change:position', function () {
     const feature = features.length ? features[0] : undefined;
       if (features.length) {
         console.log(tempVar);
-        if (feature.get("ECO_NAME") != tempVar && tempVar != undefined) {
-          tempVar = feature.get('ECO_NAME');
+        if (feature.get("NAME") != tempVar && tempVar != undefined) {
+          tempVar = feature.get('NAME');
           console.log("ran")
-          alert(feature.get('ECO_NAME'));
+          window.navigator.vibrate([500])
+          alert(tempVar);
         }
         else {
           console.log("missed");
@@ -163,36 +164,9 @@ function addPosition(position, heading, m, speed) {
   }
   positions.appendCoordinate([x, y, heading, m]);
 
-
-  // vectorLayerz.getSource().once('change', function(e) {
-  //   if (vectorLayerz.getSource().getState() === 'ready') {
-  //     const features = vectorLayerz.getSource().getFeatures();
-  //     const feature = features.length ? features[0] : undefined;
-  //     if (features.length) {
-  //       console.log(tempVar);
-  //       if (feature.get("ECO_NAME") != tempVar) {
-  //         tempVar = feature.get('ECO_NAME');
-  //         console.log("ran")
-  //         alert(feature.get('ECO_NAME'));
-  //       }
-  //       else {
-  //         console.log("missed");
-  //       }
-  //     } else {
-  //       alert('No features found');
-  //     }
-  //   }
-  // });
-
   // only keep the 20 last coordinates
   positions.setCoordinates(positions.getCoordinates().slice(-20));
 
-  // FIXME use speed instead
-  // if (heading && speed) {
-  //   markerEl.src = 'data/geolocation_marker_heading.png';
-  // } else {
-  //   markerEl.src = 'data/geolocation_marker.png';
-  // }
 }
 
 
@@ -206,7 +180,7 @@ function updateView() {
   if (c) {
     view.setCenter(getCenterWithHeading(c, -c[2], view.getResolution()));
     view.setRotation(-c[2]);
-    // marker.setPosition(c);
+    positionFeature.setGeometry(c ? new Point(c) : null);
     map.render();
   }
 }
@@ -220,6 +194,35 @@ function getCenterWithHeading(position, rotation, resolution) {
     position[1] + (Math.cos(rotation) * height * resolution * 1) / 4,
   ];
 }
+
+// This is a backup, the user can also tap 
+map.on('click', function (evt) {
+  displayFeatureInfo(evt.pixel);
+});
+
+let highlight;
+const displayFeatureInfo = function (pixel) {
+  vectorLayerz.getFeatures(pixel).then(function (features) {
+    const feature = features.length ? features[0] : undefined;
+    const info = document.getElementById('info');
+    if (features.length) {
+        tempVar = feature.get('NAME');
+          window.navigator.vibrate([500])
+          alert(tempVar);
+    }
+
+    if (feature !== highlight) {
+      if (highlight) {
+        featureOverlay.getSource().removeFeature(highlight);
+      }
+      if (feature) {
+        featureOverlay.getSource().addFeature(feature);
+      }
+      highlight = feature;
+    }
+  });
+};
+
 
 // End of stollen code
 function setup() {
