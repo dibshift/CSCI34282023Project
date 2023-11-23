@@ -18,7 +18,7 @@ import Point from 'ol/geom/Point.js';
 import GeoJSON from 'ol/format/GeoJSON.js';
 
 // This is for features.length
-let tempVar = "temp";
+let tempVar = "No features found";
 
 // Maybe move this stuff to another file
 const bsOffcanvas = new bootstrap.Offcanvas('#offcanvasBottom');
@@ -94,7 +94,7 @@ positionFeature.setStyle(
   })
 );
 
-geolocation.on('change:position', function () {
+geolocation.on('change', function () {
   const coordinates = geolocation.getPosition();
   // positionFeature.setGeometry(coordinates ? new Point(coordinates) : null);
   // accuracyFeature.setGeometry(geolocation.getAccuracyGeometry());
@@ -113,23 +113,7 @@ geolocation.on('change:position', function () {
     deltaMean = (coords[len - 1][3] - coords[0][3]) / (len - 1);
   }
 
-   // takes information from a placed geometry. (from GeoJSON) and makes a list of info from that map.
-  // TODO: Make it so that it only does that when entering an area
-  vectorLayerz.getFeatures(map.getPixelFromCoordinate(position)).then(function (e) {
-    const features = vectorLayerz.getSource().getFeatures();
-    const feature = features.length ? features[0] : undefined;
-      if (features.length) {
-        console.log(tempVar);
-        if (feature.get("NAME") != tempVar && tempVar != undefined) {
-          displayInformation(feature)
-        }
-        else {
-          console.log("missed");
-        }
-      } else {
-        alert('No features found');
-      }
-    });
+  updateView();
 });
 
 const vectorLayerz = new VectorLayer({
@@ -142,7 +126,7 @@ const vectorLayerz = new VectorLayer({
   }),
 });
 
-let previousM = 0;
+
 function addPosition(position, heading, m, speed) {
   const x = position[0];
   const y = position[1];
@@ -166,7 +150,8 @@ function addPosition(position, heading, m, speed) {
 
 }
 
-
+let previousM = 0;
+// ! this (or add position) should be the base for things to happen and NOT change position
 function updateView() {
   // use sampling period to get a smooth transition
   let m = Date.now() - deltaMean * 1.5;
@@ -177,8 +162,30 @@ function updateView() {
   if (c) {
     view.setCenter(getCenterWithHeading(c, -c[2], view.getResolution()));
     view.setRotation(-c[2]);
-    positionFeature.setGeometry(c ? new Point(c) : null);
-    map.render();
+    positionFeature.setGeometry(c ? new Point(c.slice(0,2)) : null);
+    accuracyFeature.setGeometry(geolocation.getAccuracyGeometry());
+    // map.render();
+
+    // Clean 
+ // takes information from a placed geometry. (from GeoJSON) and makes a list of info from that map.
+  // TODO: Make it so that it only does that when entering an area
+  vectorLayerz.getFeatures(map.getPixelFromCoordinate(geolocation.getPosition())).then(function (features) {
+    // const features = vectorLayerz.getSource().getFeatures();
+    const feature = features.length ? features[0] : undefined;
+      if (features.length) {
+        // console.log(map.getPixelFromCoordinate(geolocation.getPosition()));
+        console.log(tempVar + " and " + feature.get("NAME"));
+        if (feature.get("NAME") != tempVar && tempVar != undefined && feature.get("NAME") != undefined) {
+          tempVar = feature.get('NAME');
+          displayInformation(feature)
+        }
+        else {
+          console.log("missed");
+        }
+      } else {
+        //alert('No features found');
+      }
+    });
   }
 }
 
@@ -197,33 +204,25 @@ map.on('click', function (evt) {
   displayFeatureInfo(evt.pixel);
 });
 
-let highlight;
 const displayFeatureInfo = function (pixel) {
   vectorLayerz.getFeatures(pixel).then(function (features) {
     const feature = features.length ? features[0] : undefined;
     const info = document.getElementById('info');
     if (features.length) {
+      console.log("something");
         displayInformation(feature)
-    }
-
-    if (feature !== highlight) {
-      if (highlight) {
-        featureOverlay.getSource().removeFeature(highlight);
-      }
-      if (feature) {
-        featureOverlay.getSource().addFeature(feature);
-      }
-      highlight = feature;
+    } else {
+      console.log("nothings");
     }
   });
 };
 
 // TODO: Add check for existing offchart
 function displayInformation(feature) {
-  tempVar = feature.get('NAME');
-  console.log("ran")
-  window.navigator.vibrate([500])
-  alert(tempVar);
+  
+  console.log(feature.get('NAME'));
+  window.navigator.vibrate([500]);
+  alert(feature.get('NAME'));
 }
 
 
