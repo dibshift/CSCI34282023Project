@@ -15,8 +15,7 @@
   <body>
     <div id="map"></div>
     <script type="module" src="./main.js"></script>
-
-    <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
+    <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasStart" aria-labelledby="offcanvasBottomLabel">
       <!-- <div class="offcanvas-header text-center">
         <h5 class="offcanvas-title" id="offcanvasBottomLabel">Offcanvas bottom</h5>
       </div> -->
@@ -28,9 +27,20 @@
         </svg>
         <p style="font-size:5vw;">English Metropolis City Conservation
           Companion Mobile Map</p>
-        <t>Allow tracking to give us your personal data.</t>
-        <button type="button" class="btn btn-primary" id="allowTrackingbtn">Sign your life away ;)</button>
+        <t>Allow tracking for application to work</t>
+        <button type="button" class="btn btn-primary" id="allowTrackingbtn">Enable Geolocation</button>
       </div>
+    </div>
+
+    <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasArea" aria-labelledby="offcanvasBottomLabel" data-bs-backdrop="false">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasBottomLabel">Area</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body small">
+        <t id="AreaDESC">This area is pretty cool</t>
+      </div>
+    </div>
     
   </body>
 </html>

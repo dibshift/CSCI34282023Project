@@ -21,7 +21,8 @@ import GeoJSON from 'ol/format/GeoJSON.js';
 let tempVar = "No features found";
 
 // Maybe move this stuff to another file
-const bsOffcanvas = new bootstrap.Offcanvas('#offcanvasBottom');
+const bsStartOffcanvas = new bootstrap.Offcanvas('#offcanvasStart');
+const bsAreaOffcanvas = new bootstrap.Offcanvas('#offcanvasArea');
 const allowTrackingbtn = document.getElementById('allowTrackingbtn');
 
 // starting view
@@ -58,7 +59,7 @@ allowTrackingbtn.addEventListener(
     geolocation.setTracking(true);
     tileLayer.on('postrender', updateView);
     map.render();
-    bsOffcanvas.hide();
+    bsStartOffcanvas.hide();
   }
 )
 
@@ -162,7 +163,7 @@ function updateView() {
   if (c) {
     view.setCenter(getCenterWithHeading(c, -c[2], view.getResolution()));
     view.setRotation(-c[2]);
-    positionFeature.setGeometry(c ? new Point(c.slice(0,2)) : null);
+    positionFeature.setGeometry(geolocation.getPosition() ? new Point(geolocation.getPosition()) : null);
     accuracyFeature.setGeometry(geolocation.getAccuracyGeometry());
     // map.render();
 
@@ -170,17 +171,11 @@ function updateView() {
  // takes information from a placed geometry. (from GeoJSON) and makes a list of info from that map.
   // TODO: Make it so that it only does that when entering an area
   vectorLayerz.getFeatures(map.getPixelFromCoordinate(geolocation.getPosition())).then(function (features) {
-    // const features = vectorLayerz.getSource().getFeatures();
     const feature = features.length ? features[0] : undefined;
-      if (features.length) {
-        // console.log(map.getPixelFromCoordinate(geolocation.getPosition()));
-        console.log(tempVar + " and " + feature.get("NAME"));
+      if (features.length) {;
         if (feature.get("NAME") != tempVar && tempVar != undefined && feature.get("NAME") != undefined) {
           tempVar = feature.get('NAME');
           displayInformation(feature)
-        }
-        else {
-          console.log("missed");
         }
       } else {
         //alert('No features found');
@@ -209,10 +204,7 @@ const displayFeatureInfo = function (pixel) {
     const feature = features.length ? features[0] : undefined;
     const info = document.getElementById('info');
     if (features.length) {
-      console.log("something");
         displayInformation(feature)
-    } else {
-      console.log("nothings");
     }
   });
 };
@@ -222,12 +214,16 @@ function displayInformation(feature) {
   
   console.log(feature.get('NAME'));
   window.navigator.vibrate([500]);
-  alert(feature.get('NAME'));
+  // alert(feature.get('NAME') + "\n" + feature.get('DESC'));
+  console.log(bsAreaOffcanvas)
+  $("#offcanvasBottomLabel").text(feature.get('NAME'));
+  $("#AreaDESC").text(feature.get('DESC'));
+  bsAreaOffcanvas.show();
 }
 
 
 // End of stollen code
 function setup() {
-  bsOffcanvas.show();
+  bsStartOffcanvas.show();
 }
 setup();
