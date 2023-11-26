@@ -2,11 +2,15 @@
 <html>
 
   <head>
+    <!-- Set the viewport for responsive design -->
     <meta name="viewport"
-      content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+      content="initial-scale=1, maximum-scale=1, user-scalable=no" />
     <title>Map</title>
+    <!-- Include OpenLayers CSS from CDN -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.2.2/ol.css">
+    <!-- Include OpenLayers JavaScript from CDN -->
     <script src="https://cdn.jsdelivr.net/npm/ol@v7.2.2/dist/ol.js"></script>
+    <!-- Style for the map container -->
     <style>
       #map {
         position: absolute;
@@ -19,12 +23,16 @@
   </head>
 
   <body>
+    <!-- Map container with specified dimensions -->
     <div id="map" style="width:800px; height:600px;">
+      <!-- MapTiler logo with a link to their website -->
       <a href="https://www.maptiler.com"
         style="position:absolute;left:10px;bottom:10px;z-index:999;">
         <img src="https://api.maptiler.com/resources/logo.svg"
-          alt="MapTiler logo"></a>
+          alt="MapTiler logo">
+      </a>
     </div>
+    <!-- Include the custom JavaScript file for map configuration -->
     <script src="mapScript.js"></script>
   </body>
 
