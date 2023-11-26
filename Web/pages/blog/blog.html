@@ -18,6 +18,16 @@
     <link rel="stylesheet" href="../../styles/header.css"/>
     <link rel="stylesheet" href="../../styles/footer.css"/>
 
+    <!--Linking the google API for the sign-in button, loading the google API-->
+    <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
+    <script>
+      gapi.load('auth2', function() {
+        gapi.auth2.init({
+          client_id: '226147134989-90nv6e7ltejhcr4pi3brlc7egmkjle7c.apps.googleusercontent.com',
+        });
+      });
+    </script>
+
 <title>Blog</title>
 
 </head>
@@ -30,7 +40,7 @@
       <a class="org-logo" href="../../index.html"></a>
       <!--Links back to homepage if clicked-->
       <p>
-        <a href="../../index.html">French Village Forest<b>Conservation</b></a>
+        <a href="../../index.html">French Village Forest<b> Conservation</b></a>
       </p>
     </div>
     <div class="menu-btn">
@@ -55,7 +65,7 @@
     </div>
   </div>
 </header>
-
+<div class="g-signin2" data-onsuccess="onSignIn"></div>
 <!--Blog text entry area-->
 <div id="blogAreaContainer">
   <textarea id="freeform" name="freeform" placeholder="Enter blog text here..." rows="8" cols="100"></textarea>
