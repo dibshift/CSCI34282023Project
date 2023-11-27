@@ -131,3 +131,6 @@ dist
 
 # Mac Files
 **/.DS_Store
+
+# photos for mobilemap
+mobilemap/photos/*
