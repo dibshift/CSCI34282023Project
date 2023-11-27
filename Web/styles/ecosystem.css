@@ -1,0 +1,65 @@
+/* Done By Rian Ahmed A00437022 */
+  
+/* table styling */
+  table {
+    width: 100%;
+    margin: 20px 0;
+    border-collapse: collapse;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: white;
+  }
+  
+/* table styling */
+  th,
+  td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #38833a;
+    color: white;
+  }
+
+/* image styling */
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+  }
+  
+/* button and search input styling */
+  #floraButton,
+  #searchInput {
+    margin: 10px auto;
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  #floraButton {
+    background-color: #38833a;
+    color: white;
+    cursor: pointer;
+  }
+  
+/* Searchbar styling */
+  #searchInput {
+    background-color: #f8f8f8;
+  }
+  
+  @media only screen and (max-width: 600px) {
+    table {
+      margin-top: 10px;
+    }
+  
+    #floraButton,
+    #searchInput {
+      margin-bottom: 10px;
+    }
+  }
+  

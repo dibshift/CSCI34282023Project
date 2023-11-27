@@ -1,6 +1,6 @@
 <!--
   Purpose: Ecosystem page of the website, contains information regarding the flora and fauna found at the conservation
-  Authors: 
+  Authors: Rian Ahmed A00437022
   Devon Leigh - Styling, structure, content
   Rahabar Mahmud - Content, Footer
 -->
@@ -38,6 +38,12 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
 
+    <!--Linking stylesheet for the table-->
+    <link rel="stylesheet" href="../../styles/ecosystem.css">
+
+    <!--Script for the table for the switch and search function-->
+    <script src="../../scripts/ecosystem.js"></script>
+    
     <!--Linking the javascript files for functionality-->
     <script defer src="../../scripts/estore.js"></script>
     <script>
@@ -114,94 +120,50 @@ window.location.reload();
           </p>
         </div>
       </div>
-      <div class="ecosystemcontent-title">
-        <h4 class="main-container">Hover over the circles for more information!</h4>
-      </div>
-      <div class="ecosystem-content">
-        <!--Container for the flora flipcards-->
-        <div class="flora-container">
-          <div class="flora-title">
-            <h2 class="main-container">Flora</h2>
-          </div>
-          <div class="flip-card">
-            <div class="flip-card-inner">
-              <div class="flip-card-birchfront"></div>
-              <div class="flip-card-back">
-                <h1 class="main-container">
-                  Coastal Yellow<br />
-                  Birch
-                </h1>
-                <p class="main-container">
-                  Coastal Yellow birch is Nova Scotia's longest-lived hardwood
-                  species dating over 300 years.
-                </p>
-              </div>
-            </div>
-          </div>
+      
+      <button id="floraButton" onclick="toggleTable()">Switch to Flora</button>
 
-          <div class="flip-card">
-            <div class="flip-card-inner">
-              <div class="flip-card-applefront"></div>
-              <div class="flip-card-back">
-                <h1 class="main-container">Apple Trees<br /></h1>
-                <p class="main-container">
-                  French Village is home to some of the largest apple trees in
-                  eastern Canada
-                </p>
-              </div>
-            </div>
-          </div>
+  <input type="text" id="searchInput" oninput="searchTable()" placeholder="Search by name">
 
-          <div class="flip-card">
-            <div class="flip-card-inner">
-              <div class="flip-card-pearfront"></div>
-              <div class="flip-card-back">
-                <h1 class="main-container">Pear Trees<br /></h1>
-                <p class="main-container">
-                  French Village is home to some of the largest apple trees in
-                  eastern Canada
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+  <table id="animalTable">
+    <thead>
+      <tr>
+        <th>Picture</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Fauna Data -->
+      <tr>
+        <td><img src="../../resources/image/fauna/songSparrow.jpg" alt="Song Sparrow (Melospiza melodia)"></td>
+        <td>Song Sparrow (Melospiza melodia)</td>
+        <td>The song sparrow (Melospiza melodia) is a medium-sized New World sparrow. Among the native sparrows in North America, it is easily one of the most abundant, variable and adaptable species. Adult song sparrows have brown upperparts with dark streaks on the back and are white underneath with dark streaking and a dark brown spot in the middle of the breast. They have a brown cap and a long brown rounded tail. Their face is gray with a brown streak through each eye.<br><br><a href="http://commons.wikimedia.org/wiki/File:Melospiza_melodia_JRVdH_01.jpg" rel="noreferrer">Image by Cephas</a></td>
+      </tr>
+      <tr>
+        <td><img src="../../resources/image/fauna/redSquirrel.jpeg" alt="American red squirrel (Tamiasciurus hudsonicus)"></td>
+        <td>American red squirrel (Tamiasciurus hudsonicus)</td>
+        <td>The American red squirrel (Tamiasciurus hudsonicus) is one of three species of tree squirrels currently classified in the genus Tamiasciurus, known as the pine squirrels (the others are the Douglas squirrel, T. douglasii, and the southwestern red squirrel, T. fremonti). The American red squirrel is variously known as the pine squirrel or piney squirrel, North American red squirrel, chickaree, boomer, or simply red squirrel. <br><br><a href="https://www.inaturalist.org/observations/106185117">Image by Craig K. Hunt</a></td>
+      </tr>
+      <tr>
+        <td><img src="../../resources/image/fauna/asianLadyBeetle.jpg" alt="Asian Lady Beetle (Harmonia axyridis)"></td>
+        <td>American red squirrel (Tamiasciurus hudsonicus)</td>
+        <td>Harmonia axyridis is a large lady beetle or ladybug species that is most commonly known as the harlequin, Asian, or multicoloured asian lady beetle. This is one of the most variable species in the world, with an exceptionally wide range of colour forms. It is native to eastern Asia, but has been artificially introduced to North America and Europe to control aphids and scale insects. It is now common, well known, and spreading in those regions, and has also established in Africa and widely across South America. This species is conspicuous in North America, where it may locally be known as the Halloween beetle, as it often invades homes during October to overwinter.<br><br><a href="https://www.inaturalist.org/photos/30978499">Image by Paolo Mazzei</a></td>
+      </tr>
+      <tr>
+        <td><img src="../../resources/image/fauna/commonPeriwinkle.jpg" alt="Common Periwinkle (Littorina littorea)"></td>
+        <td>Common Periwinkle (Littorina littorea)</td>
+        <td>The common periwinkle or winkle (Littorina littorea) is a species of small edible whelk or sea snail, a marine gastropod mollusc that has gills and an operculum, and is classified within the family Littorinidae, the periwinkles. This is a robust intertidal species with a dark and sometimes banded shell. It is native to the rocky shores of the northeastern, and introduced to the northwestern, Atlantic Ocean. <br><br><a href="https://www.inaturalist.org/observations/3505851">Image by Robin Gwen Agarwal</a></td>
+      </tr>
+      <tr>
+        <td><img src="../../resources/image/fauna/rockPigeon.jpg" alt="Rock Pigeon (Columba livia)"></td>
+        <td>Rock Pigeon (Columba livia)</td>
+        <td>The rock dove, rock pigeon, or common pigeon is a member of the bird family Columbidae. In common usage, it is often simply referred to as the "pigeon". Wild rock doves are pale grey with two black bars on each wing, whereas domestic and feral pigeons vary in colour and pattern. Few differences are seen between males and females. The species is generally monogamous, with two squabs (young) per brood. Both parents care for the young for a time.<br><br><a href="https://www.inaturalist.org/observations/96934693">Image by Константин Самодуров</a></td>
+      </tr>
+      <!-- Add more animal rows as needed -->
 
-        <!--Container for the fauna flipcards-->
-        <div class="fauna-container">
-          <div class="fauna-title">
-            <h2 class="main-container">Fauna</h2>
-          </div>
-
-          <div class="flip-card">
-            <div class="flip-card-inner">
-              <div class="flip-card-goosefront"></div>
-              <div class="flip-card-back">
-                <h1 class="main-container">Canada Goose</h1>
-                <p class="main-container">
-                  At French Village Conservation, you will find a Canadian
-                  staple, the Canada Goose.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div class="flip-card">
-            <div class="flip-card-inner">
-              <div class="flip-card-salamanderfront"></div>
-              <div class="flip-card-back">
-                <h1 class="main-container">
-                  Eastern<br />Red-backed<br />
-                  Salamander
-                </h1>
-                <p class="main-container">
-                  One of our many scaly friends on the conservation, these guys
-                  are a small salamander that inhabits wooded slopes.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    </tbody>
+  </table>
 
       <!--The footer-->
       <footer class="section-p1">
