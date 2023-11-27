@@ -154,6 +154,8 @@ allowTrackingbtn.addEventListener(
     // Enabling geolocation tracking when the button is clicked
     geolocation.setTracking(true);
 
+    tileLayer.on('postrender', updateView);
+
     // Rendering the map to reflect the updated geolocation information
     map.render();
 
@@ -213,45 +215,6 @@ positionFeature.setStyle(
   })
 );
 
-
-// Handling changes in geolocation information
-
-// Adding an event listener for the 'change' event on the geolocation instance
-geolocation.on('change', function () {
-  // Updating the position feature geometry based on the current geolocation position
-  positionFeature.setGeometry(geolocation.getPosition() ? new Point(geolocation.getPosition()) : null);
-
-  // Updating the accuracy feature geometry based on the current geolocation accuracy information
-  accuracyFeature.setGeometry(geolocation.getAccuracyGeometry());
-  // map.render();
-
-  // Centering the map view on the updated positionFeature
-  view.setCenter(positionFeature.getGeometry().getCoordinates());
-
-  // Clean 
-  // takes information from a placed geometry. (from GeoJSON) and makes a list of info from that map.
-  // TODO: Make it so that it only does that when entering an area
-
-  // Retrieving features from the vector layer based on the geolocation position
-  vectorLayerz.getFeatures(map.getPixelFromCoordinate(geolocation.getPosition())).then(function (features) {
-    // Extracting the first feature from the result (if any)
-    const feature = features.length ? features[0] : undefined;
-
-    // Checking if features are present
-    if (features.length) {
-      // Checking if the feature's name has changed and it's not undefined
-      if (feature.get("NAME") !== tempDisplayInfo && tempDisplayInfo !== undefined && feature.get("NAME") !== undefined) {
-        // Updating tempDisplayInfo and displaying information about the feature
-        tempDisplayInfo = feature.get('NAME');
-        displayInformation(feature);
-      }
-    } else {
-      // Alerting the user if no features are found (optional)
-      // alert('No features found');
-    }
-  });
-});
-
 /**
  * Represents a Vector Layer on a map, containing geographical features sourced from geojson
  * for use in the creation of the areas on the trail checkpoints/testing areas on campus.
@@ -278,6 +241,25 @@ const vectorLayerz = new VectorLayer({
     format: new GeoJSON(),  // Using the GeoJSON format for parsing the data
   }),
 });
+
+
+// Handling changes in geolocation information
+
+// Adding an event listener for the 'change' event on the geolocation instance
+geolocation.on('change', function () {
+  // Updating the position feature geometry based on the current geolocation position
+  positionFeature.setGeometry(geolocation.getPosition() ? new Point(geolocation.getPosition()) : null);
+
+  // Updating the accuracy feature geometry based on the current geolocation accuracy information
+  accuracyFeature.setGeometry(geolocation.getAccuracyGeometry());
+  // map.render();
+
+  // Centering the map view on the updated positionFeature
+  view.setCenter(positionFeature.getGeometry().getCoordinates());
+
+  
+});
+
 
 // Setting up an event listener for the 'click' event on the map
 map.on('click', function (evt) {
@@ -321,8 +303,6 @@ const displayFeatureInfo = function (pixel) {
  */
 function displayInformation(feature) {
 
-  // Triggering a vibration effect on the device (if supported)
-  window.navigator.vibrate([500]);
 
   // Updating the text content of HTML elements in the offcanvas
   $("#offcanvasBottomLabel").text(feature.get('NAME'));
@@ -341,3 +321,28 @@ function setup() {
 
 // Calling the setup function to initialize the application
 setup();
+
+function updateView() {
+  // Clean 
+  // takes information from a placed geometry. (from GeoJSON) and makes a list of info from that map.
+  // TODO: Make it so that it only does that when entering an area
+
+  // Retrieving features from the vector layer based on the geolocation position
+  vectorLayerz.getFeatures(map.getPixelFromCoordinate(geolocation.getPosition())).then(function (features) {
+    // Extracting the first feature from the result (if any)
+    const feature = features.length ? features[0] : undefined;
+
+    // Checking if features are present
+    if (features.length) {
+      // Checking if the feature's name has changed and it's not undefined
+      if (feature.get("NAME") !== tempDisplayInfo && tempDisplayInfo !== undefined && feature.get("NAME") !== undefined) {
+        // Updating tempDisplayInfo and displaying information about the feature
+        tempDisplayInfo = feature.get('NAME');
+        displayInformation(feature);
+      }
+    } else {
+      // Alerting the user if no features are found (optional)
+      // alert('No features found');
+    }
+  });
+}
