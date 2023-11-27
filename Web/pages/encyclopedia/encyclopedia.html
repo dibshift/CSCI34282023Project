@@ -1,0 +1,64 @@
+<!-- Done By Rian Ahmed A00437022 -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discover Nature</title>
+  <link rel="stylesheet" href="styles/encyclopedia.css">
+</head>
+
+<body>
+  <header>
+    <h1>Discover Nature</h1>
+  </header>
+
+  <button id="floraButton" onclick="toggleTable()">Switch to Flora</button>
+
+  <input type="text" id="searchInput" oninput="searchTable()" placeholder="Search by name">
+
+  <table id="animalTable">
+    <thead>
+      <tr>
+        <th>Picture</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Fauna Data -->
+      <tr>
+        <td><img src="images/songSparrow.jpg" alt="Song Sparrow (Melospiza melodia)"></td>
+        <td>Song Sparrow (Melospiza melodia)</td>
+        <td>The song sparrow (Melospiza melodia) is a medium-sized New World sparrow. Among the native sparrows in North America, it is easily one of the most abundant, variable and adaptable species. Adult song sparrows have brown upperparts with dark streaks on the back and are white underneath with dark streaking and a dark brown spot in the middle of the breast. They have a brown cap and a long brown rounded tail. Their face is gray with a brown streak through each eye.<br><br><a href="http://commons.wikimedia.org/wiki/File:Melospiza_melodia_JRVdH_01.jpg" rel="noreferrer">Image by Cephas</a></td>
+      </tr>
+      <tr>
+        <td><img src="images/redSquirrel.jpeg" alt="American red squirrel (Tamiasciurus hudsonicus)"></td>
+        <td>American red squirrel (Tamiasciurus hudsonicus)</td>
+        <td>The American red squirrel (Tamiasciurus hudsonicus) is one of three species of tree squirrels currently classified in the genus Tamiasciurus, known as the pine squirrels (the others are the Douglas squirrel, T. douglasii, and the southwestern red squirrel, T. fremonti). The American red squirrel is variously known as the pine squirrel or piney squirrel, North American red squirrel, chickaree, boomer, or simply red squirrel. <br><br><a href="https://www.inaturalist.org/observations/106185117">Image by Craig K. Hunt</a></td>
+      </tr>
+      <tr>
+        <td><img src="images/asianLadyBeetle.jpg" alt="Asian Lady Beetle (Harmonia axyridis)"></td>
+        <td>American red squirrel (Tamiasciurus hudsonicus)</td>
+        <td>Harmonia axyridis is a large lady beetle or ladybug species that is most commonly known as the harlequin, Asian, or multicoloured asian lady beetle. This is one of the most variable species in the world, with an exceptionally wide range of colour forms. It is native to eastern Asia, but has been artificially introduced to North America and Europe to control aphids and scale insects. It is now common, well known, and spreading in those regions, and has also established in Africa and widely across South America. This species is conspicuous in North America, where it may locally be known as the Halloween beetle, as it often invades homes during October to overwinter.<br><br><a href="https://www.inaturalist.org/photos/30978499">Image by Paolo Mazzei</a></td>
+      </tr>
+      <tr>
+        <td><img src="images/commonPeriwinkle.jpg" alt="Common Periwinkle (Littorina littorea)"></td>
+        <td>Common Periwinkle (Littorina littorea)</td>
+        <td>The common periwinkle or winkle (Littorina littorea) is a species of small edible whelk or sea snail, a marine gastropod mollusc that has gills and an operculum, and is classified within the family Littorinidae, the periwinkles. This is a robust intertidal species with a dark and sometimes banded shell. It is native to the rocky shores of the northeastern, and introduced to the northwestern, Atlantic Ocean. <br><br><a href="https://www.inaturalist.org/observations/3505851">Image by Robin Gwen Agarwal</a></td>
+      </tr>
+      <tr>
+        <td><img src="images/rockPigeon.jpg" alt="Rock Pigeon (Columba livia)"></td>
+        <td>Rock Pigeon (Columba livia)</td>
+        <td>The rock dove, rock pigeon, or common pigeon is a member of the bird family Columbidae. In common usage, it is often simply referred to as the "pigeon". Wild rock doves are pale grey with two black bars on each wing, whereas domestic and feral pigeons vary in colour and pattern. Few differences are seen between males and females. The species is generally monogamous, with two squabs (young) per brood. Both parents care for the young for a time.<br><br><a href="https://www.inaturalist.org/observations/96934693">Image by Константин Самодуров</a></td>
+      </tr>
+      <!-- Add more animal rows as needed -->
+
+    </tbody>
+  </table>
+
+  <script src="script/encyclopedia.js"></script>
+</body>
+
+</html>
