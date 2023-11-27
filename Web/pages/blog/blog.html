@@ -8,6 +8,9 @@
       content="width=
     , initial-scale=1.0"
     />
+    <meta name="google-signin-client_id"
+      content="
+      226147134989-90nv6e7ltejhcr4pi3brlc7egmkjle7c.apps.googleusercontent.com">
 
     <!--Linking bootstrap for styling-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -17,16 +20,6 @@
     <link rel="stylesheet" href="../../styles/nav.css"/>
     <link rel="stylesheet" href="../../styles/header.css"/>
     <link rel="stylesheet" href="../../styles/footer.css"/>
-
-    <!--Linking the google API for the sign-in button, loading the google API-->
-    <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
-    <script>
-      gapi.load('auth2', function() {
-        gapi.auth2.init({
-          client_id: '226147134989-90nv6e7ltejhcr4pi3brlc7egmkjle7c.apps.googleusercontent.com',
-        });
-      });
-    </script>
 
 <title>Blog</title>
 
@@ -58,6 +51,7 @@
             <li><a href="../../pages/newmap/client/conservation.html">Gallery</a></li>
             <li><a href="../../pages/newmap/admin/index.html">Photo Upload</a></li>
             <li><a href="../../pages/blog/blog.html">Blog</a></li>
+            <li><div class="g-signin2" data-onsuccess="onSignIn"></div></li>
           </ul>
           </ul>
         </nav>
@@ -65,9 +59,21 @@
     </div>
   </div>
 </header>
-<div class="g-signin2" data-onsuccess="onSignIn"></div>
+<!-- <div class="g-signin2" data-onsuccess="onSignIn"></div> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+<!--Linking the google API for the sign-in button, loading the google API-->
+<script src="https://apis.google.com/js/platform.js?onload=loadGapi" async defer></script>
+<script>
+  function loadGapi() {
+    gapi.load('auth2', function() {
+      gapi.auth2.getAuthInstance({
+        client_id: '226147134989-90nv6e7ltejhcr4pi3brlc7egmkjle7c.apps.googleusercontent.com',
+      });
+    });
+  }
+</script>
 <!--Blog text entry area-->
-<div id="blogAreaContainer">
+<div id="blogAreaContainer" onload="setupBox(blogContent)">
   <textarea id="freeform" name="freeform" placeholder="Enter blog text here..." rows="8" cols="100"></textarea>
   <br>
   <div id="postAndClearButtons">
