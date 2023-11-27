@@ -308,6 +308,40 @@ function displayInformation(feature) {
   $("#offcanvasBottomLabel").text(feature.get('NAME'));
   $("#AreaDESC").text(feature.get('DESC'));
 
+
+  switch(feature.get('NAME')) {
+    case "Loyd":
+      $("#imgbox1").attr("href", "photos/farmhouse 1.jpg");
+      $("#imgboximg1").attr("src", "photos/farmhouse 1.jpg");
+
+      $("#imgbox2").attr("href", "photos/farmhouse 2.jpg");
+      $("#imgboximg2").attr("src", "photos/farmhouse 2.jpg");
+
+      $("#imgbox3").attr("href", "photos/fauna.jpg");
+      $("#imgboximg3").attr("src", "photos/fauna.jpg");
+      break;
+    case "Place":
+      $("#imgbox1").attr("href", "photos/trailhead 1.jpg");
+      $("#imgboximg1").attr("src", "photos/trailhead 1.jpg");
+
+      $("#imgbox2").attr("href", "photos/trailhead 2.jpg");
+      $("#imgboximg2").attr("src", "photos/trailhead 2.jpg");
+
+      $("#imgbox3").attr("href", "photos/well.jpg");
+      $("#imgboximg3").attr("src", "photos/well.jpg");
+      break;
+    default:
+      $("#imgbox1").attr("href", "photos/yellow birch sitting 1.jpg");
+      $("#imgboximg1").attr("src", "photos/yellow birch sitting 1.jpg");
+
+      $("#imgbox2").attr("href", "photos/yellow birch sitting 2.jpg");
+      $("#imgboximg2").attr("src", "photos/yellow birch sitting 2.jpg");
+
+      $("#imgbox3").attr("href", "photos/yellow birch.jpg");
+      $("#imgboximg3").attr("src", "photos/yellow birch.jpg");
+      break;
+  }
+
   // Showing the offcanvas to display detailed information
   bsAreaOffcanvas.show();
 }

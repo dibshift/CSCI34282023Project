@@ -23,6 +23,9 @@
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
       crossorigin="anonymous"></script>
+    <!-- lightbox2 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js" integrity="sha512-Ixzuzfxv1EqafeQlTCufWfaC6ful6WFqIz4G+dWvK0beHw0NVJwvCKSgafpy5gwNqKmgUfIBraVwkKI+Cz0SEQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" integrity="sha512-ZKX+BvQihRJPA8CROKBhDNvoc2aDMOdAlcm7TUQY+35XYtrd3yh95QOOhsPDQY9QnKE0Wqag9y38OIgEvb88cA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <title>English Metropolis City Conservation</title>
   </head>
@@ -57,7 +60,7 @@
     </div>
 
     <!-- Area information offcanvas -->
-    <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasArea"
+    <div class="offcanvas offcanvas-bottom h-auto" tabindex="-1" id="offcanvasArea"
       aria-labelledby="offcanvasBottomLabel" data-bs-backdrop="false">
       <!-- Offcanvas header for area information -->
       <div class="offcanvas-header">
@@ -69,7 +72,22 @@
       <!-- Offcanvas body for area information -->
       <div class="offcanvas-body small">
         <!-- Area description -->
-        <t id="AreaDESC">This area is pretty cool</t>
+
+        <!-- https://stackoverflow.com/questions/35993300/horizontally-scrollable-list-of-cards-in-bootstrap -->
+        <div class="container-fluid py-2" id="carddiv">
+          <div class="d-flex flex-row flex-nowrap">
+              <a data-lightbox="areaImages" data-title="Image 1" id="imgbox1" data-alt="" href="photos/yellow birch sitting 1.jpg">
+                <div class="card card-body"><img id="imgboximg1" src="photos/yellow birch sitting 1.jpg" style="height: 100%; width: 100%; object-fit: cover;"></div>
+              </a>
+              <a data-lightbox="areaImages" data-title="Image 2" id="imgbox2" data-alt="" href="photos/yellow birch sitting 2.jpg">
+                <div class="card card-body"><img id="imgboximg2" src="photos/yellow birch sitting 2.jpg" style="height: 100%; width: 100%; object-fit: cover;"></div>
+              </a>
+              <a data-lightbox="areaImages" data-title="Image 3" id="imgbox3" data-alt="" href="photos/yellow birch.jpg">
+                <div class="card card-body"><img id="imgboximg3" src="photos/yellow birch.jpg" style="height: 100%; width: 100%; object-fit: cover;"></div>
+              </a>  
+          </div>
+      </div>
+      <t id="AreaDESC">This area is pretty cool</t>
       </div>
     </div>
   </body>
