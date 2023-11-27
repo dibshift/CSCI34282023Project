@@ -320,8 +320,6 @@ const displayFeatureInfo = function (pixel) {
  * @throws {Error} Throws an error if the feature is not provided or lacks necessary properties.
  */
 function displayInformation(feature) {
-  // Logging the name of the feature to the console
-  console.log(feature.get('NAME'));
 
   // Triggering a vibration effect on the device (if supported)
   window.navigator.vibrate([500]);
