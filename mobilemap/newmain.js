@@ -242,10 +242,24 @@ const vectorLayerz = new VectorLayer({
   }),
 });
 
-
-// Handling changes in geolocation information
-
-// Adding an event listener for the 'change' event on the geolocation instance
+/**
+ * Event handler for the 'change' event of the geolocation service.
+ * This function updates the position and accuracy features on the map based on the current geolocation information.
+ *
+ * @event geolocation.on('change')
+ * @function
+ * @throws {Error} If there is an issue with setting or updating the position and accuracy features.
+ *
+ * @description
+ * The function performs the following actions:
+ * 1. Updates the position feature geometry based on the current geolocation position.
+ * 2. Updates the accuracy feature geometry based on the current geolocation accuracy information.
+ * 3. Centers the map view on the updated positionFeature.
+ *
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API} for information on the Geolocation API.
+ * @see {@link https://openlayers.org/en/latest/apidoc/module-ol_geom_Point-Point.html} for information on the OpenLayers Point geometry.
+ * @see {@link https://openlayers.org/en/latest/apidoc/module-ol_View-View.html#setCenter} for information on the OpenLayers setCenter method.
+ */
 geolocation.on('change', function () {
   // Updating the position feature geometry based on the current geolocation position
   positionFeature.setGeometry(geolocation.getPosition() ? new Point(geolocation.getPosition()) : null);
@@ -257,11 +271,87 @@ geolocation.on('change', function () {
   // Centering the map view on the updated positionFeature
   view.setCenter(positionFeature.getGeometry().getCoordinates());
 
-  
+
 });
 
+/**
+ * Event handler for the 'change' event of the geolocation service.
+ * This function updates the position and accuracy features on the map based on the current geolocation information.
+ *
+ * @event geolocation.on('change')
+ * @function
+ * @throws {Error} If there is an issue with setting or updating the position and accuracy features.
+ *
+ * @description
+ * The function performs the following actions:
+ * 1. Updates the position feature geometry based on the current geolocation position.
+ * 2. Updates the accuracy feature geometry based on the current geolocation accuracy information.
+ * 3. Centers the map view on the updated positionFeature.
+ *
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API} for information on the Geolocation API.
+ * @see {@link https://openlayers.org/en/latest/apidoc/module-ol_geom_Point-Point.html} for information on the OpenLayers Point geometry.
+ * @see {@link https://openlayers.org/en/latest/apidoc/module-ol_View-View.html#setCenter} for information on the OpenLayers setCenter method.
+ */
+function handleGeolocationChange() {
+  try {
+    // Updating the position feature geometry based on the current geolocation position
+    positionFeature.setGeometry(geolocation.getPosition() ? new Point(geolocation.getPosition()) : null);
 
-// Setting up an event listener for the 'click' event on the map
+    // Updating the accuracy feature geometry based on the current geolocation accuracy information
+    accuracyFeature.setGeometry(geolocation.getAccuracyGeometry());
+
+    // Centering the map view on the updated positionFeature
+    view.setCenter(positionFeature.getGeometry().getCoordinates());
+  } catch (error) {
+    throw new Error('Error handling geolocation change: ' + error.message);
+  }
+}
+
+/**
+ * Event handler for the 'click' event on the map.
+ * This function calls another function to display information about the clicked feature based on the clicked pixel.
+ *
+ * @event map.on('click')
+ * @function
+ * @param {Object} evt - The click event object containing information about the click, such as the clicked pixel.
+ * @throws {Error} If there is an issue with displaying information about the clicked feature.
+ *
+ * @description
+ * The function performs the following actions:
+ * 1. Captures the click event on the map.
+ * 2. Calls the 'displayFeatureInfo' function to show information about the clicked feature based on the clicked pixel.
+ *
+ * @param {Object} evt.pixel - The pixel coordinates of the clicked point on the map.
+ *
+ * @see {@link https://openlayers.org/en/latest/apidoc/module-ol_MapBrowserEvent-MapBrowserEvent.html} for information on OpenLayers MapBrowserEvent.
+ * @see {@link https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html#on} for information on the OpenLayers map 'on' method.
+ * @see {@link displayFeatureInfo} for information on the function that displays feature information.
+ */
+map.on('click', function (evt) {
+  // Calling the function to display information about the clicked feature based on the clicked pixel
+  displayFeatureInfo(evt.pixel);
+});
+
+/**
+ * Event handler for the 'click' event on the map.
+ * This function calls another function to display information about the clicked feature based on the clicked pixel.
+ *
+ * @event map.on('click')
+ * @function
+ * @param {Object} evt - The click event object containing information about the click, such as the clicked pixel.
+ * @throws {Error} If there is an issue with displaying information about the clicked feature.
+ *
+ * @description
+ * The function performs the following actions:
+ * 1. Captures the click event on the map.
+ * 2. Calls the 'displayFeatureInfo' function to show information about the clicked feature based on the clicked pixel.
+ *
+ * @param {Object} evt.pixel - The pixel coordinates of the clicked point on the map.
+ *
+ * @see {@link https://openlayers.org/en/latest/apidoc/module-ol_MapBrowserEvent-MapBrowserEvent.html} for information on OpenLayers MapBrowserEvent.
+ * @see {@link https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html#on} for information on the OpenLayers map 'on' method.
+ * @see {@link displayFeatureInfo} for information on the function that displays feature information.
+ */
 map.on('click', function (evt) {
   // Calling the function to display information about the clicked feature based on the clicked pixel
   displayFeatureInfo(evt.pixel);
@@ -309,7 +399,7 @@ function displayInformation(feature) {
   $("#AreaDESC").text(feature.get('DESC'));
 
 
-  switch(feature.get('NAME')) {
+  switch (feature.get('NAME')) {
     case "Loyd":
       $("#imgbox1").attr("href", "photos/farmhouse 1.jpg");
       $("#imgboximg1").attr("src", "photos/farmhouse 1.jpg");
@@ -347,7 +437,20 @@ function displayInformation(feature) {
 }
 
 
-// Function named 'setup' to initialize the application
+/**
+ * Initializes the application by displaying the start offcanvas.
+ *
+ * @function
+ *
+ * @description
+ * This function is responsible for setting up the application. It specifically performs the following action:
+ * - Shows the start offcanvas when the application is initialized.
+ *
+ * @throws {Error} If there is an issue with displaying the start offcanvas.
+ *
+ * @see {@link bsStartOffcanvas} for information on the Bootstrap Start Offcanvas component used in the application.
+ * @see {@link https://getbootstrap.com/docs/5.0/components/offcanvas/} for Bootstrap Offcanvas documentation.
+ */
 function setup() {
   // Showing the start offcanvas when the application is set up
   bsStartOffcanvas.show();
@@ -356,6 +459,25 @@ function setup() {
 // Calling the setup function to initialize the application
 setup();
 
+/**
+ * Updates the view by retrieving information from a placed geometry (from GeoJSON) and creating a list of information from that map.
+ *
+ * @function
+ *
+ * @description
+ * This function performs the following actions:
+ * - Retrieves features from the vector layer based on the geolocation position.
+ * - Extracts the first feature from the result (if any).
+ * - Checks if the feature's name has changed and is not undefined.
+ * - If the name has changed, updates the temporary display information and calls a function to display detailed information about the feature.
+ *
+ * @throws {Error} If there is an issue with retrieving features or displaying information.
+ *
+ * @see {@link vectorLayerz} for information on the vector layer used in the application.
+ * @see {@link geolocation} for information on the geolocation service.
+ * @see {@link displayInformation} for information on the function that displays detailed information about a feature.
+ * @see {@link https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html#getPixelFromCoordinate} for information on the OpenLayers getPixelFromCoordinate method.
+ */
 function updateView() {
   // Clean 
   // takes information from a placed geometry. (from GeoJSON) and makes a list of info from that map.
