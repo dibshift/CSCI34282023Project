@@ -25,7 +25,7 @@
 
 </head>
 
-<body>
+<body onload="setupBox()">
 <header>
   <div class="header-container">
     <div class="org-name">
@@ -73,11 +73,11 @@
   }
 </script>
 <!--Blog text entry area-->
-<div id="blogAreaContainer" onload="setupBox(blogContent)">
+<div id="blogAreaContainer">
   <textarea id="freeform" name="freeform" placeholder="Enter blog text here..." rows="8" cols="100"></textarea>
   <br>
   <div id="postAndClearButtons">
-    <button type="button" class="btn btn-outline-success" id="post-button" onclick="createTextArea()">Post</button>
+    <button type="button" class="btn btn-outline-success" id="post-button" onclick="createTextArea(0, false)">Post</button>
     <button type="button" class="btn btn-outline-danger" id="clear-button" onclick="clearTextArea()">Clear</button>
   </div>
 </div>

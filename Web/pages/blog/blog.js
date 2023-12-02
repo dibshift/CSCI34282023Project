@@ -1,10 +1,12 @@
 const SERVER_URL = "http://ugdev.cs.smu.ca:3111";
 
+var onlinePosts = {};
+
 function clearTextArea() {
     document.getElementById("freeform").value = "";
 }
 
-function createTextArea() {
+function createTextArea(index, isFromGet) {
     //Create new text area and create necessary variables
     var textArea = document.createElement("textarea");
     var container = document.getElementById("blogAreaContainer");
@@ -23,6 +25,8 @@ function createTextArea() {
     textArea.cols = 50;
     textArea.value = existingTextArea.value;
     textArea.readOnly = true;
+    textArea.id = "Text Area " + index;
+    console.log(textArea.id);
     postHeader.textContent = "Posted by anonymous";
     deleteButton.textContent = "Delete";
     deleteButton.className = "btn btn-outline-danger";
@@ -60,48 +64,44 @@ function createTextArea() {
     newDiv.appendChild(lineBreak);
 
     //SQL for posting value to server
-    var blogContent = existingTextArea.value;
-    $.get(SERVER_URL + "/receive", receive).fail(errorCallback1);
-    publish(blogContent);
+    if (isFromGet == false) {
+      var blogContent = existingTextArea.value;
+      $.get(SERVER_URL + "/receive", receive).fail(errorCallback1);
+      publish(blogContent);
+    }
 }
 
 function receive(posts) {
     onlinePosts = posts;
-    for (let i in posts) {
-      if (posts[i]["posted"] == true) {
-        $("#publish" + i).attr("checked", true);
-      }
+    console.log("Receive function called");
+    console.log(posts['1'].post);
+    console.log(onlinePosts['1'].post);
+    
+    let postIds = Object.keys(onlinePosts);
+    console.log("Past postIds");
+    
+    for (let i = 0; i < postIds.length; i++) {
+      console.log("Within the for loop");
+      let id = postIds[i];
+      let post = onlinePosts[id];
+      console.log("Before text area created");
+      createTextArea(i, true);
+      console.log("After text area created");
+      let textArea = document.getElementById("Text Area " + i);
+      console.log(post.post);
+      textArea.value = post.post;
     }
-  
 }
 
-function setupBox(box) {
-
-    // let toggles = document.querySelectorAll(".switch input");
-    // let editArea = document.getElementById("editArea");
-  
-    // editArea.style.display = 'table-cell';
-    // activeBox = box;
-    var retrievedBoxObject = JSON.parse(window.localStorage.getItem('box' + box.toString()));
-    // @ts-ignore
-    blogContent = retrievedBoxObject;
-    // Make other toggles disabled when edit1 is selected - Devin
-    for (let i of toggles) {
-          // @ts-ignore
-          i.disabled = true;
-      }
-    // if post is posted, disable textbox and put the contents of whats online
-    if (onlinePosts[box.toString()]["posted"] == true) {
-      // @ts-ignore
-      blogContent = onlinePosts[box.toString()]["post"];
-      // @ts-ignore
-    //   document.getElementById("textInputBox").disabled = true;
-    }
+function setupBox() {
+    console.log("setupBox is working");
+    $.get(SERVER_URL + "/receive", receive).fail(errorCallback1);
+    console.log("Past the get request");
 }
 
 function callback1(returnedData) {
     console.log(returnedData);
-  }
+}
 
 function errorCallback1(err) {
     console.log(err.responseText);
@@ -110,12 +110,10 @@ function errorCallback1(err) {
 function publish(box) {
     let post = {
       "id": 1,
-      "title": "abcdefg", // temp
+      "title": "abcdefg", // temps
       "post": box,
     };
     $.post(SERVER_URL + "/send", post, callback1).fail(errorCallback1);
-    // update local copy of whats online (bad temp solution (do better)) - Devin
-    // onlinePosts[box.toString()]["posted"] = publish;
   }
 
 function deletePost() {

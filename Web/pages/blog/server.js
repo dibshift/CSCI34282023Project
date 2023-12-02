@@ -7,22 +7,19 @@ var posts = {
     '1':{
        "title":"",
        "post":"",
-       "posted": false
     },
     '2':{
        "title":"",
        "post":"",
-       "posted": false
     },
     '3':{
        "title":"",
        "post":"",
-       "posted": false
     }
  };
 var words = {};
 
-// Connecting to the database (I'l put mine in for now)
+// Connecting to the database
 let database = mysql.createConnection({
 host: "127.0.0.1",
 user: "group24D",
@@ -37,32 +34,26 @@ database.connect();
 function updateServer() {
   // Updating Posts
   database.query(
-    "SELECT * FROM Posts;",
+    "SELECT * FROM Posts;", //Gets all data from the Posts table
     function (err, res) {
       if (err) throw err;
       else {
-        for (let i = 0; i < res.length; i++) {
-          if (res[i] != undefined) {
-            posts[res[i].id]["title"] = res[i].title;
-            posts[res[i].id]["post"] = res[i].post;
-            if (res[i].isPosted == 1) {
-              posts[res[i].id]["posted"] = true;
-            } else {
-              posts[res[i].id]["posted"] = false
-            }
+        for (let i = 0; i < res.length; i++) { //Iterates over each record in the res array. Each record corresponds to a row in the Posts table
+          if (res[i] != undefined) { //As long as the current iteration isn't empty in the res array (no corresponding post in the Posts table), continue
+            posts[res[i].id]["title"] = res[i].title; //Updates posts variable above with the title of the current entry in the SQL table
+            posts[res[i].id]["post"] = res[i].post; //Updates posts variable above with the content of the current entry in the SQL table
           };
         };
       };
     }
   );
 };
-updateServer()
+updateServer() //Runs the above function on startup
 // These are the commands that are used to make the tables that will be used
 // CREATE TABLE Posts(
 //    id INT PRIMARY KEY,
 //    title VARCHAR(255),
 //    post TEXT,
-//    isPosted BOOLEAN NOT NULL
 // );
 
 app.use(express.json()); // implement JSON recognition
@@ -77,10 +68,10 @@ let allowCrossDomain = function (req, res, next) {
 app.use(allowCrossDomain); // implement allowable domain characteristics
 
 // setting input boxes at page load
-app.get("/receive", function (req, res) {
-  updateServer();
-  console.log(req.url);
-  return res.status(200).send(posts);
+app.get("/receive", function (req, res) { // Declared function which receives the HTTP get request sent from blog.js ($.get(SERVER_URL + "/receive", receive).fail(errorCallback1);) in this case), executes the function declared here on the server side
+  updateServer(); 
+  console.log(req.url); // Logs the URL of the incoming HTTP get request
+  return res.status(200).send(posts); // Sends a response back to the client with a status code of 200 which means OK, with the body as the posts objects
   });
 
 // template of receiving:
@@ -89,46 +80,20 @@ app.get("/receive", function (req, res) {
 //     "name":"",
 //     "post":""
 //  }
-app.post("/send", function (req, res) {
-    console.log("Id #" + req.body.id + ", Title: " + req.body.title + ", Post: " + req.body.post);
-    let publish = posts[req.body.id]["posted"];
-    console.log(publish);
-    switch (publish) {
-      case true:
-         posts[req.body.id]["posted"] = false;
-        // Updating the SQL Server
-         let query = 'UPDATE `Posts` SET isPosted = 0 WHERE id=?';
-         database.query(query, req.body.id, function(err) {
-          if(err) {
-            console.log(err.message);
-          } else {
-            updateServer();
-          }
-        });
-        
-         break;
-      case false:
-         posts[req.body.id]["title"] = req.body.title;
-         posts[req.body.id]["post"] = req.body.post;
-         posts[req.body.id]["posted"] = true;
-         // Updating the SQL Server
-         let queryFull = 'UPDATE `Posts` SET isPosted = 1, title = ?, post = ? WHERE id=?';
-         database.query(queryFull, [req.body.title, req.body.post, req.body.id], function(err) {
-          if(err) {
-            console.log(err.message);
-          } else {
-            updateServer();
-          }
-        });
-         break;
-    }
+app.post("/send", function (req, res) { // Receives POST requests to the /send endpoint.
+    console.log("Id #" + req.body.id + ", Title: " + req.body.title); // Logs the JSON object parameters from the incoming object
+    posts[req.body.id]["title"] = req.body.title; // Updates the title and post properties of the post (incoming object)
+    posts[req.body.id]["post"] = req.body.post;
+    // Updating the SQL Server
+    let queryFull = 'UPDATE `Posts` SET title = ?, post = ? WHERE id=?';
+    database.query(queryFull, [req.body.title, req.body.post, req.body.id], function(err) { // Updates the database with the new post
+      if(err) {
+        console.log(err.message); // If there is an error, log the error message
+      } else {
+        updateServer(); // Else, run this above defined function to update the server (posts) with the latest from the database, including the new post
+      }
+    });
 });
-
-app.get("/receiveword", function (req, res) {
-  updateServer();
-  console.log(req.url);
-  return res.status(200).send(words);
-  });
 
 process.on("SIGTERM", function () {
   console.log("Shutting server down.");
