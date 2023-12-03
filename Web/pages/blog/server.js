@@ -82,7 +82,8 @@ app.get("/receive", function (req, res) { // Declared function which receives th
 //  }
 app.post("/send", function (req, res) { // Receives POST requests to the /send endpoint.
     console.log("Id #" + req.body.id + ", Title: " + req.body.title); // Logs the JSON object parameters from the incoming object
-    posts[req.body.id]["title"] = req.body.title; // Updates the title and post properties of the post (incoming object)
+    // Updates the title and post properties of the post (incoming object)
+    posts[req.body.id]["title"] = req.body.title;
     posts[req.body.id]["post"] = req.body.post;
     // Updating the SQL Server
     let queryFull = 'UPDATE `Posts` SET title = ?, post = ? WHERE id=?';
