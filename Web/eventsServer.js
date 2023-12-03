@@ -1,3 +1,11 @@
+/*Author Alex Carreiro, ChatGPT
+  The purpose of this file is to post information to /postEvent
+  as well as getting information and displaying as JSON name value pairs
+  on /getEvent
+
+  Provides all server side functionality for the events page
+*/
+
 //require express, body parser, and path
 const express = require('express');
 const bodyParser = require('body-parser');
