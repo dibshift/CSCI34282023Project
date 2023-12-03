@@ -1,0 +1,155 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0; /* Background color of the website */
+}
+
+#pageTitle{
+    padding-top: 7%;
+    color: brown;
+}
+
+.indivEvent {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+  }
+
+  .eventDetails {
+    flex-basis: 80%; /* Adjust the width based on your preference */
+    padding-right: 20px; /* Add some spacing between the two columns */
+  }
+
+  .eventDescription {
+    flex-basis: 40%; /* Adjust the width based on your preference */
+  }
+
+h1{
+    
+    font-size: 50px;
+    line-height: 64px;
+    color: #222;
+    
+}
+
+
+body{
+    padding-top: 4.5%;
+    background-color: white;
+    flex-direction: column;
+}
+
+#stack{
+    box-shadow: inset;
+}
+
+h2{
+    font-size: 38px;
+    font-weight: bold;
+}
+
+h3{
+    font-weight: bold;
+}
+
+.row{
+    justify-content: flex-start;
+}
+
+
+
+.main {
+    box-shadow: #222;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    padding: 20px 0;
+  }
+  
+.calendar-container {
+    padding-top: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px 0;
+  }
+
+  .carousel-inner{
+    justify-content: left;
+  }
+  
+  .container{
+    position: absolute;
+    max-width: 960px;
+    margin: 0 auto;
+    padding-top: 20px;
+    padding-left: 0px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 53%;
+    margin-top: 20px;
+  }
+  
+.indivEvent{
+    padding-top: 5%
+}
+
+header {
+    background-color: #333; /* Header background color */
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #fff;
+}
+
+main {
+    padding: 20px 0;
+}
+
+
+#calendar {
+    border: #333;
+
+} 
+
+#upcoming-events ul {
+    list-style: none;
+    padding: 0;
+}
+
+#upcoming-events li {
+    margin: 20px 0;
+    border: 1px solid #ddd; /* Border for event items */
+    padding: 10px;
+    border-radius: 5px;
+}
+
+footer {
+    text-align: center;
+    background-color: #333; /* Footer background color */
+    color: #fff;
+    padding: 10px 0;
+}
+
