@@ -1,3 +1,9 @@
+/* 
+Authors: Alex Carreiro, ChatGPT
+The purpose of this file is to submit events to the server
+*/
+
+
 // Function to handle the submission of form data entered by the administrator
 function submitForm() {
   // Extract form input values and create an object with event data
