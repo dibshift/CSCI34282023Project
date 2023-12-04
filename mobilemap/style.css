@@ -10,3 +10,9 @@ html, body {
   bottom: 0;
   width: 100%;
 }
+
+.card-body {
+  min-height: 100px;
+  min-width: 100px;
+  margin-right: 5px;
+}

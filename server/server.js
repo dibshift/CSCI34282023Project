@@ -29,11 +29,11 @@ const mapRouter = require("./Routes/map");
 
 // build the connection string
 let head = "mongodb://";
-let user = "group23E";
-let password = "41AustriaLeaderThin";
+let user = "group24D";
+let password = "venusSPECIALstart605";
 let localHost = "127.0.0.1";
 let localPort = "27017";
-let database = "group23E";
+let database = "group24D";
 let connectionString = `${head}${user}:${password}@${localHost}:${localPort}/${database}`;
 
 // code provided by Prof Terry

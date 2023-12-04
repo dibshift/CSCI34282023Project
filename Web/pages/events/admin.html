@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Administrator</title>
+  
+  <script src="./admin.js"></script>
+</head>
+<body>
+  <h2>Event Details Entry</h2>
+  <form id="eventForm">
+    
+    <label for="eventDate">Event Date:</label>
+    <input type="date" id="eventDate" name="eventDate" required><br>
+
+    <label for="eventTime">Event Time:</label>
+    <input type="time" id="eventTime" name="eventTime" required><br>
+
+    <label for="eventTitle">Event Title:</label>
+    <input type="text" id="eventTitle" name="eventTitle" required><br>
+
+    <label for="eventDescription">Brief Description:</label>
+    <textarea maxlength="250" id="eventDescription" name="eventDescription" rows="4" required></textarea><br>
+
+    <button type="button" onclick="submitForm()">Submit Event</button>
+  </form>
+
+</body>
+</html>
