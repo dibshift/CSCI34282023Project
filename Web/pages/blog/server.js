@@ -5,19 +5,21 @@ const port = 3111;
 
 var posts = {
     '1':{
-       "title":"",
        "post":"",
     },
     '2':{
-       "title":"",
        "post":"",
     },
     '3':{
-       "title":"",
        "post":"",
-    }
+    },
+    '4':{
+      "post":"",
+   },
+   '5':{
+      "post":"",
+   }
  };
-var words = {};
 
 // Connecting to the database
 let database = mysql.createConnection({
@@ -40,7 +42,9 @@ function updateServer() {
       else {
         for (let i = 0; i < res.length; i++) { //Iterates over each record in the res array. Each record corresponds to a row in the Posts table
           if (res[i] != undefined) { //As long as the current iteration isn't empty in the res array (no corresponding post in the Posts table), continue
-            posts[res[i].id]["title"] = res[i].title; //Updates posts variable above with the title of the current entry in the SQL table
+            if (!posts[res[i].id]) {
+              posts[res[i].id] = {};
+            }
             posts[res[i].id]["post"] = res[i].post; //Updates posts variable above with the content of the current entry in the SQL table
           };
         };
@@ -52,7 +56,6 @@ updateServer() //Runs the above function on startup
 // These are the commands that are used to make the tables that will be used
 // CREATE TABLE Posts(
 //    id INT PRIMARY KEY,
-//    title VARCHAR(255),
 //    post TEXT,
 // );
 
@@ -81,15 +84,30 @@ app.get("/receive", function (req, res) { // Declared function which receives th
 //     "post":""
 //  }
 app.post("/send", function (req, res) { // Receives POST requests to the /send endpoint.
-    console.log("Id #" + req.body.id + ", Title: " + req.body.title); // Logs the JSON object parameters from the incoming object
-    // Updates the title and post properties of the post (incoming object)
-    posts[req.body.id]["title"] = req.body.title;
+    console.log("Id #" + req.body.id); // Logs the JSON object parameters from the incoming object
+    if (req.body.id > Object.keys(posts).length) {
+      console.log("EXCEEDS LENGTH");
+      posts[req.body.id] = {
+        "post":req.body.post
+      };
+      let queryRowAdd = 'INSERT INTO `Posts` VALUES (?, ?)';
+      database.query(queryRowAdd, [req.body.id, req.body.post], function(err) {
+        if (err) {
+          console.log(req.body.id);
+        } else {
+          updateServer();
+        }
+      })
+    } else {
+      console.log("GOOD LENGTH");
+    }
+    // Updates the post properties of the post (incoming object)
     posts[req.body.id]["post"] = req.body.post;
     // Updating the SQL Server
-    let queryFull = 'UPDATE `Posts` SET title = ?, post = ? WHERE id=?';
-    database.query(queryFull, [req.body.title, req.body.post, req.body.id], function(err) { // Updates the database with the new post
+    let queryFull = 'INSERT INTO `Posts` VALUES () UPDATE `Posts` SET post = ? WHERE id=?';
+    database.query(queryFull, [req.body.post, req.body.id], function(err) { // Updates the database with the new post
       if(err) {
-        console.log(err.message); // If there is an error, log the error message
+        console.log(req.body.id);//err.message); // If there is an error, log the error message
       } else {
         updateServer(); // Else, run this above defined function to update the server (posts) with the latest from the database, including the new post
       }

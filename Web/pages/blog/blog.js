@@ -1,14 +1,19 @@
 const SERVER_URL = "http://ugdev.cs.smu.ca:3111"; // URL for ugdev server with a random port selected
 
 var onlinePosts = {}; // JSON Object for storing values obtained from server from mysql database
+var createTextAreaCalls = 0;
+var pageLoadedFlag = false;
 
 function clearTextArea() {
     document.getElementById("freeform").value = ""; // This function finds the text entry area and clears out the text
 }
 
-function createTextArea(index, isFromGet) { // Function for creating a text area, and other functionality per post, when a post is made
+function createTextArea(index, isFromGet, calledFrom) { // Function for creating a text area, and other functionality per post, when a post is made
     //Create new text area and create necessary variables
     var textArea = document.createElement("textarea"); // New text area
+    console.log(isFromGet);
+    createTextAreaCalls += 1;
+    console.log(createTextAreaCalls);
     var existingTextArea = document.getElementById("freeform"); // Text entry area
     var lineBreak = document.createElement("br"); // Line Break
     var postHeader = document.createElement("h5"); // Per post header
@@ -24,6 +29,9 @@ function createTextArea(index, isFromGet) { // Function for creating a text area
     textArea.cols = 50;
     textArea.value = existingTextArea.value;
     textArea.readOnly = true;
+    if (index == 0) {
+        index = Object.keys(onlinePosts).length + 1;
+    }
     textArea.id = "Text Area " + index; // For keeping track of each post created
     console.log(textArea.id); //For logging each created post (and for testing)
 
@@ -67,7 +75,7 @@ function createTextArea(index, isFromGet) { // Function for creating a text area
     newDiv.style.flexDirection = "column";
     newDiv.style.alignItems = "center";
 
-    blogAreaDiv.insertBefore(newDiv, freeform); // Inserts the newDiv created for storing everything created upon posting, before the text entry area on the page. (So the replies are above the text entry area)
+    blogAreaDiv.insertBefore(newDiv, freeform); // Inserts the newDiv created for storing everything created upon posting, before the text entry area on the page. (So the posts are above the text entry area)
     // Adds the post header and text area to this new div
     newDiv.appendChild(postHeader);
     newDiv.appendChild(textArea);
@@ -89,23 +97,25 @@ function createTextArea(index, isFromGet) { // Function for creating a text area
 function receive(posts) { // Note: Will probably have to differentiate where receive is being called from to avoid creating too many text areas
     // Sets local JSON object (onlinePosts) to contain what is obtained from the server, and compares the values in the console to make sure they are the same (testing/debugging purposes)
     onlinePosts = posts;
-    console.log(posts['1'].post);
-    console.log(onlinePosts['1'].post);
+    console.log(pageLoadedFlag);
     
     let postIds = Object.keys(onlinePosts); // Creates a new variable for storing an array containing every post ID stored on the server (in the database)
-    
-    for (let i = 0; i < postIds.length; i++) { // For loop to loop through each post according to how many post Ids are obtained
-      let id = postIds[i]; // Obtains the specific id for whichever corresponding post the current iteration is on
-      let post = onlinePosts[id]; // Gets the specific JSON object which the id above is associated with
-      createTextArea(i, true); // Creates a new text area with the specific iteration as the id int so I can give it an id element which will tell me which post is which
-      let textArea = document.getElementById("Text Area " + i); // Gets the specific newly created text area from this iteration and sets as a variable
-      console.log(post.post); // Logs to console for testing/debugging purposes
-      textArea.value = post.post; // Sets the specific text area's contents to the corresponding post's contents
+    if (pageLoadedFlag == false) {
+        for (let i = 0; i < postIds.length; i++) { // For loop to loop through each post according to how many post Ids are obtained
+            let id = postIds[i]; // Obtains the specific id for whichever corresponding post the current iteration is on
+            let post = onlinePosts[id]; // Gets the specific JSON object which the id above is associated with
+            createTextArea(i + 1, true, "receive"); // Creates a new text area with the specific iteration as the id int so I can give it an id element which will tell me which post is which
+            let textArea = document.getElementById("Text Area " + (i + 1)); // Gets the specific newly created text area from this iteration and sets as a variable
+            console.log(post.post); // Logs to console for testing/debugging purposes
+            textArea.value = post.post; // Sets the specific text area's contents to the corresponding post's contents
+            pageLoadedFlag = true;
+        }
     }
 }
 
 function setupBox() { // Function called on body load in HTML file
     $.get(SERVER_URL + "/receive", receive).fail(errorCallback1); // Attempts to call the receive function with the returned value from the get function in the server.js
+    createTextAreaCalls = 0;
 }
 
 function callback1(returnedData) { // Function run if jQuery server actions are successful
@@ -117,13 +127,15 @@ function errorCallback1(err) { // Function run if jQuery server actions are unsu
 }
 
 function publish(box) { // Only handles one post worth at the current moment, will have to add an incrementing feature to keep track of indefinite number of posts (yes, this is an inefficient system, but I don't have better ideas at the moment)
+    let postIds = Object.keys(onlinePosts);
+    let nextPostId = postIds.length + 1;
     let post = {
-      "id": 1,
-      "title": "abcdefg", // Will probably remove title variable from database if I don't require it for some purpose
+      "id": nextPostId,
       "post": box,
     };
+    console.log(post);
     $.post(SERVER_URL + "/send", post, callback1).fail(errorCallback1); // Attempts to update the server with newly created posts which will update the database in turn
-  }
+}
 
 function deletePost() { // Will need to add capability of deleting posts on the database through some jQuery server post call
     var divToDelete = this.parentNode.parentNode; // Gets grandparent node of the post delete button, in other words, newDiv
