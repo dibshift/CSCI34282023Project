@@ -6,10 +6,16 @@
   geolocation, and displaying of the user's current location with a dot. The file also
   uses bootstrap and offCanvas for displaying the initial location consent pop up with button.
   This is also used for the pop up that occurs when a generated location boundary is entered
-  or clicked to show information about the location. Code resources used were openLayers git
-  repo under geolocation-orientation.
+  or clicked to show information about the location. Location boundaries made with json with 
+  the help of geojson.io are semi-transparent polygons on the map. Park.json contains test locations 
+  on campus and smutest.json contains campus locations only. Code resources used were openLayers git 
+  repo under geolocation-orientation and just geolocation. Javadoc comments made with the help of ChatGPT. 
+  JSON files made with help from geojson.io.
+
+  
 
   resource: https://github.com/openlayers/openlayers/blob/main/examples/geolocation-orientation.js#L29
+            geojson.io
 
   Author: Devin Robar A00446150
   Commenting: Christian Sawyer A00428578, Devin Robar A00446150
@@ -164,8 +170,6 @@ allowTrackingbtn.addEventListener(
   }
 );
 
-// ! TODO: figure out the best way to show the error
-
 /**
  * Event handler for errors that arise with the geolocation object geolocation.
  *
@@ -237,8 +241,8 @@ const vectorLayerz = new VectorLayer({
     features: [accuracyFeature, positionFeature],
 
     // Loading additional features from a GeoJSON source
-    url: 'smutest.json',   // the GeoJSON file for creating area boundaries
-    format: new GeoJSON(),  // Using the GeoJSON format for parsing the data
+    url: 'smutest.json',   // the GeoJSON file for creating area boundaries, smutest.json contains smu test locations only,
+    format: new GeoJSON(),  // Using the GeoJSON format for parsing the data, park.json contains smutest and park areas
   }),
 });
 
@@ -382,8 +386,6 @@ const displayFeatureInfo = function (pixel) {
   });
 };
 
-
-// TODO: Add check for existing offchart
 /**
  * Displays detailed information about a geographical feature.
  *
@@ -398,7 +400,7 @@ function displayInformation(feature) {
   $("#offcanvasBottomLabel").text(feature.get('NAME'));
   $("#AreaDESC").text(feature.get('DESC'));
 
-
+  //switch case for loading images with test locations
   switch (feature.get('NAME')) {
     case "Loyd":
       $("#imgbox1").attr("href", "photos/farmhouse 1.jpg");
@@ -479,9 +481,6 @@ setup();
  * @see {@link https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html#getPixelFromCoordinate} for information on the OpenLayers getPixelFromCoordinate method.
  */
 function updateView() {
-  // Clean 
-  // takes information from a placed geometry. (from GeoJSON) and makes a list of info from that map.
-  // TODO: Make it so that it only does that when entering an area
 
   // Retrieving features from the vector layer based on the geolocation position
   vectorLayerz.getFeatures(map.getPixelFromCoordinate(geolocation.getPosition())).then(function (features) {
