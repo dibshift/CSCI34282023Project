@@ -13,7 +13,7 @@ function createTextArea(index, isFromGet, calledFrom) { // Function for creating
     var textArea = document.createElement("textarea"); // New text area
     console.log(isFromGet);
     createTextAreaCalls += 1;
-    console.log(createTextAreaCalls);
+    // console.log(createTextAreaCalls);
     var existingTextArea = document.getElementById("freeform"); // Text entry area
     var lineBreak = document.createElement("br"); // Line Break
     var postHeader = document.createElement("h5"); // Per post header
@@ -33,7 +33,7 @@ function createTextArea(index, isFromGet, calledFrom) { // Function for creating
         index = Object.keys(onlinePosts).length + 1;
     }
     textArea.id = "Text Area " + index; // For keeping track of each post created
-    console.log(textArea.id); //For logging each created post (and for testing)
+    // console.log(textArea.id); //For logging each created post (and for testing)
 
     postHeader.textContent = "Posted by anonymous"; // Sets the per post header to say posted by anonymous - ideally will say posted by whoever's google account is logged in but not working yet
 
@@ -104,11 +104,13 @@ function receive(posts) { // Note: Will probably have to differentiate where rec
         for (let i = 0; i < postIds.length; i++) { // For loop to loop through each post according to how many post Ids are obtained
             let id = postIds[i]; // Obtains the specific id for whichever corresponding post the current iteration is on
             let post = onlinePosts[id]; // Gets the specific JSON object which the id above is associated with
-            createTextArea(i + 1, true, "receive"); // Creates a new text area with the specific iteration as the id int so I can give it an id element which will tell me which post is which
-            let textArea = document.getElementById("Text Area " + (i + 1)); // Gets the specific newly created text area from this iteration and sets as a variable
-            console.log(post.post); // Logs to console for testing/debugging purposes
-            textArea.value = post.post; // Sets the specific text area's contents to the corresponding post's contents
-            pageLoadedFlag = true;
+            if (post.post.trim() !== "") {
+                createTextArea(i + 1, true, "receive"); // Creates a new text area with the specific iteration as the id int so I can give it an id element which will tell me which post is which
+                let textArea = document.getElementById("Text Area " + (i + 1)); // Gets the specific newly created text area from this iteration and sets as a variable
+                console.log(post.post); // Logs to console for testing/debugging purposes
+                textArea.value = post.post; // Sets the specific text area's contents to the corresponding post's contents
+                pageLoadedFlag = true;
+            }
         }
     }
 }
@@ -139,5 +141,33 @@ function publish(box) { // Only handles one post worth at the current moment, wi
 
 function deletePost() { // Will need to add capability of deleting posts on the database through some jQuery server post call
     var divToDelete = this.parentNode.parentNode; // Gets grandparent node of the post delete button, in other words, newDiv
+    var postToDelete = getElementsByIdStartsWith(divToDelete, "textarea", "Text Area");
+    console.log(postToDelete);
+    var postId = postToDelete.slice(10);
+    console.log(postId);
     divToDelete.parentNode.removeChild(divToDelete); // Deletes newDiv for specific post this is being called for
+    let post = {
+         "id": postId,
+         "post": "",
+    };
+    $.post(SERVER_URL + "/delete", post, callback1).fail(errorCallback1);
 }
+
+/**
+ * Written by ChatGPT
+ * 
+ * @param {*} selectorTag element tag being searched
+ * @param {*} text id starts with "text"
+ * @returns all selectorTag elements whose ID starts with 'text'
+ */
+function getElementsByIdStartsWith(parentElement, selectorTag, text) {
+    var items = [];
+    var myPosts = parentElement.getElementsByTagName(selectorTag);
+    for (var i = 0; i < myPosts.length; i++) {
+        if (myPosts[i].id.indexOf(text) === 0) {
+            return myPosts[i].id;
+        }
+    }
+    return items;
+}
+
