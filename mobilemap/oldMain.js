@@ -1,18 +1,44 @@
+/*
+  File: oldMain.js
+
+  NOT FULLY FUNCTIONING VERSION SEE newmain.js
+
+  Description: This file contains JavaScript code for the index.html for
+  mobilemap geolocation app. The file uses OpenLayers API for the map generation and 
+  geolocation, and displaying of the user's current location with a dot. The file also
+  uses bootstrap and offCanvas for displaying the initial location consent pop up with button.
+  This is also used for the pop up that occurs when a generated location boundary is entered
+  or clicked to show information about the location. Location boundaries made with json with 
+  the help of geojson.io are semi-transparent polygons on the map. Park.json contains test locations 
+  on campus and smutest.json contains campus locations only. Code resources used were openLayers git 
+  repo under geolocation-orientation and just geolocation. Javadoc comments made with the help of ChatGPT. 
+  JSON files made with help from geojson.io. 
+
+  
+
+  resource: https://github.com/openlayers/openlayers/blob/main/examples/geolocation-orientation.js#L29
+            geojson.io
+
+  Author: Devin Robar A00446150
+  Commenting: Christian Sawyer A00428578, Devin Robar A00446150
+  Testing: Devin Robar A00446150, Christian Sawyer A00428578
+  Date: November 2023
+*/
 import './style.css';
-import {Map, View, Geolocation} from 'ol';
+import { Map, View, Geolocation } from 'ol';
 import TileLayer from 'ol/layer/Tile';
 // OpenSourceMap
 import OSM from 'ol/source/OSM';
-import {fromLonLat} from 'ol/proj.js';
+import { fromLonLat } from 'ol/proj.js';
 
 // Array for holding positions that have been gained from the gps?
 import LineString from 'ol/geom/LineString.js';
 // 
 import Feature from 'ol/Feature.js';
 // Used for creating the location dot
-import {Circle as CircleStyle, Fill, Stroke, Style} from 'ol/style.js';
-import {Vector as VectorSource} from 'ol/source.js';
-import {Vector as VectorLayer} from 'ol/layer.js';
+import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style.js';
+import { Vector as VectorSource } from 'ol/source.js';
+import { Vector as VectorLayer } from 'ol/layer.js';
 import Point from 'ol/geom/Point.js';
 
 import GeoJSON from 'ol/format/GeoJSON.js';
@@ -96,7 +122,7 @@ positionFeature.setStyle(
 );
 
 geolocation.on('change', function () {
-  
+
   const position = geolocation.getPosition();
   const accuracy = geolocation.getAccuracy();
   const heading = geolocation.getHeading() || 0;
@@ -149,7 +175,6 @@ function addPosition(position, heading, m, speed) {
 }
 
 let previousM = 0;
-// ! this (or add position) should be the base for things to happen and NOT change position
 function updateView() {
   // use sampling period to get a smooth transition
   let m = Date.now() - deltaMean * 1.5;
@@ -169,11 +194,12 @@ function updateView() {
     view.setCenter(positionFeature.getGeometry().getCoordinates());
 
     // Clean 
- // takes information from a placed geometry. (from GeoJSON) and makes a list of info from that map.
-  // TODO: Make it so that it only does that when entering an area
-  vectorLayerz.getFeatures(map.getPixelFromCoordinate(geolocation.getPosition())).then(function (features) {
-    const feature = features.length ? features[0] : undefined;
-      if (features.length) {;
+    // takes information from a placed geometry. (from GeoJSON) and makes a list of info from that map.
+    // TODO: Make it so that it only does that when entering an area
+    vectorLayerz.getFeatures(map.getPixelFromCoordinate(geolocation.getPosition())).then(function (features) {
+      const feature = features.length ? features[0] : undefined;
+      if (features.length) {
+        ;
         if (feature.get("NAME") != tempVar && tempVar != undefined && feature.get("NAME") != undefined) {
           tempVar = feature.get('NAME');
           displayInformation(feature)
@@ -205,14 +231,13 @@ const displayFeatureInfo = function (pixel) {
     const feature = features.length ? features[0] : undefined;
     const info = document.getElementById('info');
     if (features.length) {
-        displayInformation(feature)
+      displayInformation(feature)
     }
   });
 };
 
-// TODO: Add check for existing offchart
 function displayInformation(feature) {
-  
+
   console.log(feature.get('NAME'));
   window.navigator.vibrate([500]);
   // alert(feature.get('NAME') + "\n" + feature.get('DESC'));

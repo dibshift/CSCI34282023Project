@@ -6,7 +6,7 @@
   geolocation, and displaying of the user's current location with a dot. The file also
   uses bootstrap and offCanvas for displaying the initial location consent pop up with button.
   This is also used for the pop up that occurs when a generated location boundary is entered
-  or clicked to show information about the location. Location boundaries made with json with 
+  or clicked to show information about the location as well as associated photos. Location boundaries made with json with 
   the help of geojson.io are semi-transparent polygons on the map. Park.json contains test locations 
   on campus and smutest.json contains campus locations only. Code resources used were openLayers git 
   repo under geolocation-orientation and just geolocation. Javadoc comments made with the help of ChatGPT. 
