@@ -3,23 +3,7 @@ const mysql = require("mysql2"); // call mysql application
 const app = express(); // define top level function
 const port = 3111;
 
-var posts = {
-    '1':{
-       "post":"",
-    },
-    '2':{
-       "post":"",
-    },
-    '3':{
-       "post":"",
-    },
-    '4':{
-      "post":"",
-   },
-   '5':{
-      "post":"",
-   }
- };
+var posts = {};
 
 // Connecting to the database
 let database = mysql.createConnection({
@@ -112,6 +96,19 @@ app.post("/send", function (req, res) { // Receives POST requests to the /send e
         updateServer(); // Else, run this above defined function to update the server (posts) with the latest from the database, including the new post
       }
     });
+});
+
+app.post("/delete", function (req, res) {
+  console.log("Id #" + req.body.id + " is being deleted from the database");
+  posts[req.body.id]["post"] = "";
+  let queryRowDelete = 'DELETE FROM Posts WHERE id=?';
+  database.query(queryRowDelete, [req.body.id], function(err) {
+    if (err) {
+      console.log(req.body.id);
+    } else {
+      console.log("Good!");
+    }
+  })
 });
 
 process.on("SIGTERM", function () {
