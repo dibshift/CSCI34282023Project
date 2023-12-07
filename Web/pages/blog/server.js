@@ -1,8 +1,17 @@
+/**
+ * Server side and database storage functionality for blog
+ * Known issues: Sometimes there is jank when too many operations are happening at once, such as deleting/posting multiple posts at a time.
+ * Also, some jank happens when revisiting the page after some time, usually after post deletion and/or reboot of server.
+ * 
+ * Written by Connor MacNeil (A00445228), some code is modified from code made by Devin Robar (A00446150)
+ */
+
 const express = require("express"); // call express application
 const mysql = require("mysql2"); // call mysql application
 const app = express(); // define top level function
 const port = 3111;
 
+//Variable for storing data obtained from database
 var posts = {};
 
 // Connecting to the database
@@ -15,8 +24,9 @@ connectTimeout: 10000,
 });
 database.connect();
 
-//When the server starts, request the posts and put them in the posts var
-// both to avoid changing some code and to make it somewhat more secure
+/**
+ * When the server starts, request the posts and put them in the posts var
+ */
 function updateServer() {
   // Updating Posts
   database.query(
@@ -26,7 +36,7 @@ function updateServer() {
       else {
         for (let i = 0; i < res.length; i++) { //Iterates over each record in the res array. Each record corresponds to a row in the Posts table
           if (res[i] != undefined) { //As long as the current iteration isn't empty in the res array (no corresponding post in the Posts table), continue
-            if (!posts[res[i].id]) {
+            if (!posts[res[i].id]) { // If there is no post, create an empty post in its place.
               posts[res[i].id] = {};
             }
             posts[res[i].id]["post"] = res[i].post; //Updates posts variable above with the content of the current entry in the SQL table
@@ -54,55 +64,40 @@ let allowCrossDomain = function (req, res, next) {
 };
 app.use(allowCrossDomain); // implement allowable domain characteristics
 
-// setting input boxes at page load
+/**
+ * For setting input boxes at page load
+ */
 app.get("/receive", function (req, res) { // Declared function which receives the HTTP get request sent from blog.js ($.get(SERVER_URL + "/receive", receive).fail(errorCallback1);) in this case), executes the function declared here on the server side
   updateServer(); 
   console.log(req.url); // Logs the URL of the incoming HTTP get request
   return res.status(200).send(posts); // Sends a response back to the client with a status code of 200 which means OK, with the body as the posts objects
   });
 
-// template of receiving:
-// {
-//     "id":"",
-//     "name":"",
-//     "post":""
-//  }
+/**
+ * Handles send requests from the client side.
+ */
 app.post("/send", function (req, res) { // Receives POST requests to the /send endpoint.
     console.log("Id #" + req.body.id); // Logs the JSON object parameters from the incoming object
-    if (req.body.id > Object.keys(posts).length) {
-      console.log("EXCEEDS LENGTH");
-      posts[req.body.id] = {
-        "post":req.body.post
-      };
-      let queryRowAdd = 'INSERT INTO `Posts` VALUES (?, ?)';
-      database.query(queryRowAdd, [req.body.id, req.body.post], function(err) {
-        if (err) {
-          console.log(req.body.id);
-        } else {
-          updateServer();
-        }
-      })
-    } else {
-      console.log("GOOD LENGTH");
-    }
-    // Updates the post properties of the post (incoming object)
-    posts[req.body.id]["post"] = req.body.post;
-    // Updating the SQL Server
-    let queryFull = 'INSERT INTO `Posts` VALUES () UPDATE `Posts` SET post = ? WHERE id=?';
-    database.query(queryFull, [req.body.post, req.body.id], function(err) { // Updates the database with the new post
-      if(err) {
-        console.log(req.body.id);//err.message); // If there is an error, log the error message
+    posts[req.body.id] = {
+      "post":req.body.post
+    };
+    let queryRowAdd = 'INSERT INTO `Posts` (id, post) VALUES (?, ?) ON DUPLICATE KEY UPDATE post = VALUES(post)'; // Updates the post properties of the post (incoming object)
+    database.query(queryRowAdd, [req.body.id, req.body.post], function(err) { // Queries the database with the sent data from client side, checks for errors below
+      if (err) {
+        console.log(req.body.id); // If error, log ID
       } else {
-        updateServer(); // Else, run this above defined function to update the server (posts) with the latest from the database, including the new post
+        updateServer(); // If no error, update the server with latest data from database
       }
-    });
+    })
 });
 
+/**
+ * Deletes a post from the server and database
+ */
 app.post("/delete", function (req, res) {
-  console.log("Id #" + req.body.id + " is being deleted from the database");
-  posts[req.body.id]["post"] = "";
-  let queryRowDelete = 'DELETE FROM Posts WHERE id=?';
-  database.query(queryRowDelete, [req.body.id], function(err) {
+  posts[req.body.id]["post"] = ""; // Sets the specified existing post in the posts object to an empty object, thereby deleting it
+  let queryRowDelete = 'DELETE FROM Posts WHERE id=?'; // Deletes the specified post from the database
+  database.query(queryRowDelete, [req.body.id], function(err) { // Queries database to run the above query, if error, log ID, otherwise log "Good!" to the console
     if (err) {
       console.log(req.body.id);
     } else {
@@ -111,13 +106,18 @@ app.post("/delete", function (req, res) {
   })
 });
 
+/**
+ * Runs when the signal is terminated, closes the database and server connections
+ */
 process.on("SIGTERM", function () {
   console.log("Shutting server down.");
   database.close();
   app.close();
 });
 
-// makes this program run on the port that was set at the top of the script
+/**
+ * Makes this program run on the port that was set at the top of the script
+ */
 app.listen(port, function () {
     console.log("Running on port: " + port);
 });

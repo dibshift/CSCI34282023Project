@@ -1,3 +1,6 @@
+<!-- Blog webpage HTML 
+Known issue: google authentication not working despite login button being present on page-->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -78,7 +81,7 @@
     <textarea id="freeform" name="freeform" placeholder="Enter blog text here..." rows="8" cols="100"></textarea>
     <br>
     <div id="postAndClearButtons">
-      <button type="button" class="btn btn-outline-success" id="post-button" onclick="createTextArea(0, false, 'html')">Post</button>
+      <button type="button" class="btn btn-outline-success" id="post-button" onclick="createTextArea(0, false)">Post</button>
       <button type="button" class="btn btn-outline-danger" id="clear-button" onclick="clearTextArea()">Clear</button>
     </div>
   </div>
