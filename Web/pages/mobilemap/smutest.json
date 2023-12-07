@@ -1,0 +1,149 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME": "Library",
+        "DESC": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget commodo est. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus feugiat velit ex, ut ultricies lectus feugiat sit amet. Sed rhoncus massa at purus ultrices, id blandit nibh ultrices. Praesent risus nibh, consequat at tincidunt et, congue nec sapien. In fringilla eros augue, in faucibus neque tincidunt in. Aenean arcu urna, scelerisque ut ante quis, venenatis finibus metus. Curabitur tincidunt arcu in tellus congue, ac auctor dui tincidunt. Proin et eros sed enim aliquet laoreet. Aenean ut risus felis. Praesent pulvinar lobortis orci eu. ",
+        "PIC": ""
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -63.5815788385752,
+              44.632088870914515
+            ],
+            [
+              -63.5813969408933,
+              44.63161852780638
+            ],
+            [
+              -63.580902088815705,
+              44.631716616753806
+            ],
+            [
+              -63.58113256786575,
+              44.632182135074146
+            ],
+            [
+              -63.5815788385752,
+              44.632088870914515
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 0
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME": "Food Place",
+        "DESC": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget commodo est. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus feugiat velit ex, ut ultricies lectus feugiat sit amet. Sed rhoncus massa at purus ultrices, id blandit nibh ultrices. Praesent risus nibh, consequat at tincidunt et, congue nec sapien. In fringilla eros augue, in faucibus neque tincidunt in. Aenean arcu urna, scelerisque ut ante quis, venenatis finibus metus. Curabitur tincidunt arcu in tellus congue, ac auctor dui tincidunt. Proin et eros sed enim aliquet laoreet. Aenean ut risus felis. Praesent pulvinar lobortis orci eu. ",
+        "PIC": ""
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -63.580508179037736,
+              44.632467125552125
+            ],
+            [
+              -63.58029916617393,
+              44.63199839349633
+            ],
+            [
+              -63.57982239088477,
+              44.63210291383788
+            ],
+            [
+              -63.58002688455146,
+              44.63255556514025
+            ],
+            [
+              -63.580508179037736,
+              44.632467125552125
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 1
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME": "Loyd",
+        "DESC": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget commodo est. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus feugiat velit ex, ut ultricies lectus feugiat sit amet. Sed rhoncus massa at purus ultrices, id blandit nibh ultrices. Praesent risus nibh, consequat at tincidunt et, congue nec sapien. In fringilla eros augue, in faucibus neque tincidunt in. Aenean arcu urna, scelerisque ut ante quis, venenatis finibus metus. Curabitur tincidunt arcu in tellus congue, ac auctor dui tincidunt. Proin et eros sed enim aliquet laoreet. Aenean ut risus felis. Praesent pulvinar lobortis orci eu. ",
+        "PIC": ""
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -63.58139625066926,
+              44.63080660243969
+            ],
+            [
+              -63.58139625066926,
+              44.63024398179087
+            ],
+            [
+              -63.580152807709766,
+              44.63024398179087
+            ],
+            [
+              -63.58056728869644,
+              44.63099778295441
+            ],
+            [
+              -63.58139625066926,
+              44.63080660243969
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 2
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "NAME": "Place",
+        "DESC": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget commodo est. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus feugiat velit ex, ut ultricies lectus feugiat sit amet. Sed rhoncus massa at purus ultrices, id blandit nibh ultrices. Praesent risus nibh, consequat at tincidunt et, congue nec sapien. In fringilla eros augue, in faucibus neque tincidunt in. Aenean arcu urna, scelerisque ut ante quis, venenatis finibus metus. Curabitur tincidunt arcu in tellus congue, ac auctor dui tincidunt. Proin et eros sed enim aliquet laoreet. Aenean ut risus felis. Praesent pulvinar lobortis orci eu. ",
+        "PIC": ""
+      },
+      "geometry": {
+        "coordinates": [
+          [
+            [
+              -63.58151301125146,
+              44.630210257438904
+            ],
+            [
+              -63.58151301125146,
+              44.62981787196401
+            ],
+            [
+              -63.57981635219575,
+              44.62981787196401
+            ],
+            [
+              -63.57981635219575,
+              44.630210257438904
+            ],
+            [
+              -63.58151301125146,
+              44.630210257438904
+            ]
+          ]
+        ],
+        "type": "Polygon"
+      },
+      "id": 3
+    }
+  ]
+}

@@ -4,6 +4,7 @@ import basicSsl from '@vitejs/plugin-basic-ssl'
 // ! made for local testing
 // TODO: Find out if theres a compiler switch for vite
 export default {
+  base: "~group24D/pages/mobilemap/",
   build: {
     sourcemap: true,
   },

@@ -37,6 +37,19 @@ import Point from 'ol/geom/Point.js';
 
 import GeoJSON from 'ol/format/GeoJSON.js';
 
+// When building the release site using vite, it moves all files used to another folder
+// for that to work for files called in javascript you must import them then use the var to call them when needed
+
+// import json from './smutest.json'
+import farmhouse1Pic from './photos/farmhouse 1.jpg';
+import farmhouse2Pic from './photos/farmhouse 2.jpg';
+import faunaPic from './photos/fauna.jpg';
+import trailhead1Pic from './photos/trailhead 1.jpg';
+import trailhead2Pic from './photos/trailhead 2.jpg';
+import wellPic from './photos/well.jpg';
+import ybs1Pic from './photos/yellow birch sitting 1.jpg';
+import ybs2Pic from './photos/yellow birch sitting 2.jpg';
+import ybPic from './photos/yellow birch.jpg';
 
 /**
  * Represents a temporary variable for displaying information about the checkpoints on the
@@ -241,8 +254,8 @@ const vectorLayerz = new VectorLayer({
     features: [accuracyFeature, positionFeature],
 
     // Loading additional features from a GeoJSON source
-    url: 'smutest.json',   // the GeoJSON file for creating area boundaries, smutest.json contains smu test locations only,
-    format: new GeoJSON(),  // Using the GeoJSON format for parsing the data, park.json contains smutest and park areas
+    url: "smutest.json",   // the GeoJSON file for creating area boundaries
+    format: new GeoJSON(),  // Using the GeoJSON format for parsing the data
   }),
 });
 
@@ -403,34 +416,34 @@ function displayInformation(feature) {
   //switch case for loading images with test locations
   switch (feature.get('NAME')) {
     case "Loyd":
-      $("#imgbox1").attr("href", "photos/farmhouse 1.jpg");
-      $("#imgboximg1").attr("src", "photos/farmhouse 1.jpg");
+      $("#imgbox1").attr("href", farmhouse1Pic);
+      $("#imgboximg1").attr("src", farmhouse1Pic);
 
-      $("#imgbox2").attr("href", "photos/farmhouse 2.jpg");
-      $("#imgboximg2").attr("src", "photos/farmhouse 2.jpg");
+      $("#imgbox2").attr("href", farmhouse2Pic);
+      $("#imgboximg2").attr("src", farmhouse2Pic);
 
-      $("#imgbox3").attr("href", "photos/fauna.jpg");
-      $("#imgboximg3").attr("src", "photos/fauna.jpg");
+      $("#imgbox3").attr("href", faunaPic);
+      $("#imgboximg3").attr("src", faunaPic);
       break;
     case "Place":
-      $("#imgbox1").attr("href", "photos/trailhead 1.jpg");
-      $("#imgboximg1").attr("src", "photos/trailhead 1.jpg");
+      $("#imgbox1").attr("href", trailhead1Pic);
+      $("#imgboximg1").attr("src", trailhead1Pic);
 
-      $("#imgbox2").attr("href", "photos/trailhead 2.jpg");
-      $("#imgboximg2").attr("src", "photos/trailhead 2.jpg");
+      $("#imgbox2").attr("href", trailhead2Pic);
+      $("#imgboximg2").attr("src", trailhead2Pic);
 
-      $("#imgbox3").attr("href", "photos/well.jpg");
-      $("#imgboximg3").attr("src", "photos/well.jpg");
+      $("#imgbox3").attr("href", wellPic);
+      $("#imgboximg3").attr("src", wellPic);
       break;
     default:
-      $("#imgbox1").attr("href", "photos/yellow birch sitting 1.jpg");
-      $("#imgboximg1").attr("src", "photos/yellow birch sitting 1.jpg");
+      $("#imgbox1").attr("href", ybs1Pic);
+      $("#imgboximg1").attr("src", ybs1Pic);
 
-      $("#imgbox2").attr("href", "photos/yellow birch sitting 2.jpg");
-      $("#imgboximg2").attr("src", "photos/yellow birch sitting 2.jpg");
+      $("#imgbox2").attr("href", ybs2Pic);
+      $("#imgboximg2").attr("src", ybs2Pic);
 
-      $("#imgbox3").attr("href", "photos/yellow birch.jpg");
-      $("#imgboximg3").attr("src", "photos/yellow birch.jpg");
+      $("#imgbox3").attr("href", ybPic);
+      $("#imgboximg3").attr("src", ybPic);
       break;
   }
 
