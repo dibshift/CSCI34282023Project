@@ -1,12 +1,35 @@
-// Done By Rian Ahmed A00437022
+/*
+  File: ecosystem.js
 
-// simple function to toggle between the two tables by using ids and variables.
+  Description: This file contains javascript code for the ecosystem.html
+  file for the ecosystem encyclopedia webpage. This file uses a table
+  and button variables to create the two separate tables and allow
+  seamless switching along with the ability to search the table
+  by only the name column of the table and nothing else.
+
+  Author: Rian Ahmed A00437022
+  Commenting: Rian Ahmed A00437022
+  Testing: Rian Ahmed A00437022
+  Date: November/December 2023
+*/
+
+/**
+ * Toggle between displaying Flora and Fauna data in a table.
+ * If the current display is Flora, switch to Fauna, and vice versa.
+ * Also, update the button label accordingly.
+ * 
+ * @function toggleTable
+ * @memberof window
+ * @global
+ */
 function toggleTable() {
-  var table = document.getElementById('animalTable');
-  var button = document.getElementById('floraButton');
+  // Get references to the table and button elements
+  let table = document.getElementById('animalTable');
+  let button = document.getElementById('floraButton');
 
+  // Check the current state of the button's label
   if (button.innerHTML === "Switch to Flora") {
-    // Swap to Flora Data and change button function
+    // Switch to displaying Flora data and update the button label
     table.innerHTML = `
       <thead>
         <tr>
@@ -47,7 +70,7 @@ function toggleTable() {
     `;
     button.innerHTML = "Switch to Fauna";
   } else {
-    // swap to Fauna Data and change button function
+    // Switch to displaying Fauna data and update the button label
     table.innerHTML = `
       <thead>
         <tr>
@@ -90,22 +113,37 @@ function toggleTable() {
   }
 }
 
-// search function for the searchbar
+/**
+ * Search and filter a table based on user input, specifically targeting the 'Name' column.
+ * The function retrieves the search input, filters the table rows based on the input,
+ * and updates the display of rows accordingly.
+ * 
+ * @function searchTable
+ * @memberof window
+ * @global
+ */
 function searchTable() {
-  var input, filter, table, tr, td, i, txtValue;
+  // Get references to input, filter, table, and table rows
+  let input, filter, table, tr, td, i, txtValue;
   input = document.getElementById("searchInput");
   filter = input.value.toUpperCase();
   table = document.getElementById("animalTable");
   tr = table.getElementsByTagName("tr");
 
+  // Iterate through each table row and check the 'Name' column for a match with the input
   for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[1]; // Index 1 corresponds to the 'Name' column
+    // Index 1 corresponds to the 'Name' column
+    td = tr[i].getElementsByTagName("td")[1];
+
     if (td) {
+      // Get the text content of the 'Name' column
       txtValue = td.textContent || td.innerText;
+
+      // Check if the text content includes the filter text (case-insensitive)
       if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
+        tr[i].style.display = ""; // Display the row if there is a match
       } else {
-        tr[i].style.display = "none";
+        tr[i].style.display = "none"; // Hide the row if there is no match
       }
     }
   }
